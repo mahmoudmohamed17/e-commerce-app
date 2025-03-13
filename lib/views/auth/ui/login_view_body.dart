@@ -5,7 +5,7 @@ import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:e_commerce_app/core/utils/custom_social_button.dart';
 import 'package:e_commerce_app/core/utils/custom_text_form_field.dart';
 import 'package:e_commerce_app/views/auth/ui/dont_have_account.dart';
-import 'package:e_commerce_app/views/nav_bar/ui/main_view.dart';
+import 'package:e_commerce_app/views/main_view/ui/main_view.dart';
 import 'package:flutter/material.dart';
 
 class LoginViewBody extends StatelessWidget {
