@@ -24,30 +24,31 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _screens),
-      bottomNavigationBar: GNav(
-        selectedIndex: _currentIndex,
-        onTabChange: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        rippleColor: Colors.grey[800]!,
-        hoverColor: Colors.grey[700]!,
-        tabBorderRadius: 15,
-        curve: Curves.easeOutExpo,
-        duration: const Duration(milliseconds: 900),
-        gap: 8,
-        color: Colors.grey[800],
-        activeColor: Colors.white,
-        iconSize: 24,
-        tabBackgroundColor: AppColors.kPrimaryColor,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        tabs: const [
-          GButton(icon: FontAwesomeIcons.house, text: 'Home'),
-          GButton(icon: FontAwesomeIcons.solidHeart, text: 'Favorites'),
-          GButton(icon: FontAwesomeIcons.magnifyingGlass, text: 'Search'),
-          GButton(icon: FontAwesomeIcons.user, text: 'Profile'),
-        ],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.00),
+        child: GNav(
+          selectedIndex: _currentIndex,
+          onTabChange: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          tabBorderRadius: 15,
+          curve: Curves.ease,
+          duration: const Duration(milliseconds: 400),
+          gap: 8,
+          color: Colors.grey[350],
+          activeColor: Colors.white,
+          iconSize: 24,
+          tabBackgroundColor: AppColors.kPrimaryColor,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          tabs: const [
+            GButton(icon: FontAwesomeIcons.house, text: 'Home'),
+            GButton(icon: FontAwesomeIcons.solidHeart, text: 'Favorites'),
+            GButton(icon: FontAwesomeIcons.magnifyingGlass, text: 'Search'),
+            GButton(icon: FontAwesomeIcons.user, text: 'Profile'),
+          ],
+        ),
       ),
     );
   }
