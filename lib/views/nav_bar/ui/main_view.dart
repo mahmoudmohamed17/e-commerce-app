@@ -24,7 +24,8 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(index: _currentIndex, children: _screens),
-      bottomNavigationBar: Padding(
+      bottomNavigationBar: Container(
+        color: Colors.white,
         padding: const EdgeInsets.all(16.00),
         child: GNav(
           selectedIndex: _currentIndex,
