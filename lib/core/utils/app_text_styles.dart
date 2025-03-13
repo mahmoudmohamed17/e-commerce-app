@@ -7,6 +7,10 @@ class AppTextStyles {
   );
   static const TextStyle bold12 = TextStyle(
     fontSize: 12,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.w700,
+  );
+  static const TextStyle bold16 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
   );
 }
