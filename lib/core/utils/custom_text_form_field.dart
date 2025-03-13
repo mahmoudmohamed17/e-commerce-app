@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/helpers/app_colors.dart';
+import 'package:e_commerce_app/core/helpers/build_border.dart';
 import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -66,9 +67,3 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   }
 }
 
-OutlineInputBorder buildBorder() {
-  return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(8),
-    borderSide: const BorderSide(color: AppColors.kBordersideColor),
-  );
-}
