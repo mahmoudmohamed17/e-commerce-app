@@ -1,14 +1,10 @@
 import 'package:e_commerce_app/core/helpers/app_colors.dart';
-import 'package:e_commerce_app/core/helpers/navigation_extension.dart';
-import 'package:e_commerce_app/core/helpers/routes.dart';
 import 'package:e_commerce_app/core/utils/app_text_styles.dart';
-import 'package:e_commerce_app/core/utils/custom_social_button.dart';
 import 'package:e_commerce_app/core/utils/custom_text_form_field.dart';
-import 'package:e_commerce_app/views/auth/ui/dont_have_account.dart';
 import 'package:flutter/material.dart';
 
-class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({super.key});
+class ForgotPasswordViewBody extends StatelessWidget {
+  const ForgotPasswordViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +14,10 @@ class LoginViewBody extends StatelessWidget {
         children: [
           const SizedBox(height: 24),
           const Text(
-            'Welcome to Shoply',
+            'Enter your Email to reset password...',
             textAlign: TextAlign.center,
             style: AppTextStyles.bold24,
           ),
-          const SizedBox(height: 54),
           Card(
             color: Colors.white,
             shape: RoundedRectangleBorder(
@@ -37,21 +32,23 @@ class LoginViewBody extends StatelessWidget {
                 spacing: 16,
                 children: [
                   const CustomTextFormField(labelText: 'Email'),
-                  const CustomTextFormField(labelText: 'Password'),
-                  TextButton(
-                    onPressed: () {
-                      context.pushNamed(Routes.forgotPasswordView);
-                    },
-                    child: Text(
-                      'Forgot Password?',
-                      style: AppTextStyles.bold12.copyWith(
-                        color: AppColors.kPrimaryColor,
+                  Align(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.kPrimaryColor,
+                        padding: const EdgeInsets.all(16.00),
+                        shadowColor: Colors.transparent,
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        'Send',
+                        style: AppTextStyles.bold12.copyWith(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                  CustomSocialButton(label: 'Login', onTap: () {}),
-                  CustomSocialButton(label: 'Login with Google', onTap: () {}),
-                  const DontHaveAccount(),
                 ],
               ),
             ),

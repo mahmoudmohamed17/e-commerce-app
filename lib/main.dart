@@ -1,4 +1,5 @@
-import 'package:e_commerce_app/views/auth/ui/login_view.dart';
+import 'package:e_commerce_app/core/helpers/app_routing.dart';
+import 'package:e_commerce_app/core/helpers/routes.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Shoply',
       theme: ThemeData(useMaterial3: true),
-      home: const LoginView(),
+      initialRoute: Routes.loginView,
+      onGenerateRoute: AppRouting.onGeneratedRoute,
     );
   }
 }

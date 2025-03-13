@@ -1,14 +1,11 @@
-import 'package:e_commerce_app/core/helpers/app_colors.dart';
-import 'package:e_commerce_app/core/helpers/navigation_extension.dart';
-import 'package:e_commerce_app/core/helpers/routes.dart';
 import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:e_commerce_app/core/utils/custom_social_button.dart';
 import 'package:e_commerce_app/core/utils/custom_text_form_field.dart';
-import 'package:e_commerce_app/views/auth/ui/dont_have_account.dart';
+import 'package:e_commerce_app/views/auth/ui/already_have_account_widget.dart';
 import 'package:flutter/material.dart';
 
-class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({super.key});
+class SignupViewBody extends StatelessWidget {
+  const SignupViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +33,12 @@ class LoginViewBody extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 spacing: 16,
                 children: [
+                  const CustomTextFormField(labelText: 'Name'),
                   const CustomTextFormField(labelText: 'Email'),
                   const CustomTextFormField(labelText: 'Password'),
-                  TextButton(
-                    onPressed: () {
-                      context.pushNamed(Routes.forgotPasswordView);
-                    },
-                    child: Text(
-                      'Forgot Password?',
-                      style: AppTextStyles.bold12.copyWith(
-                        color: AppColors.kPrimaryColor,
-                      ),
-                    ),
-                  ),
-                  CustomSocialButton(label: 'Login', onTap: () {}),
-                  CustomSocialButton(label: 'Login with Google', onTap: () {}),
-                  const DontHaveAccount(),
+                  CustomSocialButton(label: 'Signup', onTap: () {}),
+                  CustomSocialButton(label: 'Signup with Google', onTap: () {}),
+                  const AlreadyHaveAccountWidget(),
                 ],
               ),
             ),
