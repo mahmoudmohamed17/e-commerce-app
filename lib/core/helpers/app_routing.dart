@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/helpers/routes.dart';
 import 'package:e_commerce_app/views/auth/ui/forgot_password_view.dart';
 import 'package:e_commerce_app/views/auth/ui/login_view.dart';
 import 'package:e_commerce_app/views/auth/ui/signup_view.dart';
+import 'package:e_commerce_app/views/nav_bar/ui/main_view.dart';
 import 'package:flutter/material.dart';
 
 class AppRouting {
@@ -13,6 +14,8 @@ class AppRouting {
         return MaterialPageRoute(builder: (context) => const SignupView());
       case Routes.forgotPasswordView:
         return MaterialPageRoute(builder: (context) => const ForgotPasswordView());
+      case Routes.mainView:
+        return MaterialPageRoute(builder: (context) => const MainView());
       default:
         return MaterialPageRoute(builder: (context) => const Scaffold());
     }
