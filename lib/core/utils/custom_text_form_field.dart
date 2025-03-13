@@ -46,13 +46,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         ),
         suffixIcon:
             widget.labelText == 'Password'
-                ? GestureDetector(
-                  onTap: () {
+                ? IconButton(
+                  onPressed: () {
                     setState(() {
                       _isVisible = !_isVisible;
                     });
                   },
-                  child: Icon(
+                  icon: Icon(
                     _isVisible ? Icons.visibility_off : Icons.visibility,
                     color: Colors.grey[800],
                   ),
