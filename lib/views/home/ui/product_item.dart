@@ -29,8 +29,9 @@ class ProductItem extends StatelessWidget {
                 ),
                 child: Image.asset(
                   Assets.imagesProduct,
-                  height: 200,
-                  fit: BoxFit.fitWidth,
+                  height: 220,
+                  width: double.infinity,
+                  fit: BoxFit.fill,
                 ),
               ),
               const ProductNameAndHeartButton(),
