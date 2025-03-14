@@ -13,14 +13,19 @@ class CategoryItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 4,
       children: [
-        CircleAvatar(
-          backgroundColor: AppColors.kPrimaryColor,
-          radius: 30,
-          child: Icon(model.icon, color: Colors.white, size: 32,),
+        Container(
+          decoration: const BoxDecoration(
+            color: AppColors.kPrimaryColor,
+            shape: BoxShape.circle,
+          ),
+          height: 60,
+          width: 60,
+          child: Center(child: Icon(model.icon, color: Colors.white, size: 35,)),
         ),
         FittedBox(
           fit: BoxFit.scaleDown,
-          child: Text(model.title, style: AppTextStyles.medium12)),
+          child: Text(model.title, style: AppTextStyles.medium12),
+        ),
       ],
     );
   }
