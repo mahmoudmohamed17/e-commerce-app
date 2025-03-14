@@ -4,7 +4,7 @@ import 'package:e_commerce_app/views/favorites/ui/favorites_view_widget.dart';
 import 'package:e_commerce_app/views/home/ui/home_view_widget.dart';
 import 'package:e_commerce_app/views/main_view/logic/main_view_cubit/main_view_cubit.dart';
 import 'package:e_commerce_app/views/profile/ui/profile_view_widget.dart';
-import 'package:e_commerce_app/views/search/ui/search_view_widget.dart';
+import 'package:e_commerce_app/views/store/ui/store_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,8 +16,8 @@ class MainView extends StatelessWidget {
 
   final List<Widget> _screens = const [
     HomeViewWidget(),
+    StoreViewWidget(),
     FavoritesViewWidget(),
-    SearchViewWidget(),
     ProfileViewWidget(),
   ];
 
@@ -50,11 +50,8 @@ class MainView extends StatelessWidget {
                 ),
                 tabs: const [
                   GButton(icon: FontAwesomeIcons.house, text: 'Home'),
+                  GButton(icon: FontAwesomeIcons.store, text: 'Store'),
                   GButton(icon: FontAwesomeIcons.solidHeart, text: 'Favorites'),
-                  GButton(
-                    icon: FontAwesomeIcons.magnifyingGlass,
-                    text: 'Search',
-                  ),
                   GButton(icon: FontAwesomeIcons.solidUser, text: 'Profile'),
                 ],
               ),

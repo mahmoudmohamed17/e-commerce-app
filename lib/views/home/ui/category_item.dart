@@ -18,7 +18,9 @@ class CategoryItem extends StatelessWidget {
           radius: 30,
           child: Icon(model.icon, color: Colors.white, size: 32,),
         ),
-        Text(model.title, style: AppTextStyles.medium12),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(model.title, style: AppTextStyles.medium12)),
       ],
     );
   }
