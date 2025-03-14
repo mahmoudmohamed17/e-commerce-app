@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 class ProfileButtonModel {
   final String label;
   final IconData icon;
-  final void Function()? onPressed;
+  final Function(BuildContext context) onPressed;
 
   ProfileButtonModel({
     required this.label,

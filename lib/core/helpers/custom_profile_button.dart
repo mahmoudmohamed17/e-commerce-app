@@ -11,13 +11,17 @@ class CustomProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: model.onPressed,
+      onPressed: () {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          model.onPressed(context);
+        });
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.kPrimaryColor,
         elevation: 0,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16)
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
