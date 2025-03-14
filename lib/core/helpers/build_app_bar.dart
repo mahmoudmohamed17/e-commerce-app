@@ -8,7 +8,10 @@ AppBar buildAppBar(BuildContext context, String title) {
   return AppBar(
     backgroundColor: AppColors.kPrimaryColor,
     title: Text(title),
-    titleTextStyle: AppTextStyles.bold16.copyWith(color: Colors.white),
+    titleTextStyle:
+        title == 'Product Details'
+            ? AppTextStyles.regular20.copyWith(color: Colors.white)
+            : AppTextStyles.bold16.copyWith(color: Colors.white),
     centerTitle: true,
     leading: IconButton(
       onPressed: () {
