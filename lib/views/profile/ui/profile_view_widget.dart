@@ -4,6 +4,7 @@ import 'package:e_commerce_app/core/helpers/navigation_extension.dart';
 import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:e_commerce_app/views/profile/logic/profile_button_model.dart';
 import 'package:e_commerce_app/views/profile/ui/edit_name_view.dart';
+import 'package:e_commerce_app/views/profile/ui/my_orders_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -21,7 +22,9 @@ class ProfileViewWidget extends StatelessWidget {
     ProfileButtonModel(
       label: 'My Orders',
       icon: FontAwesomeIcons.bagShopping,
-      onPressed: (context) {},
+      onPressed: (context) {
+        context.pushNamed(MyOrdersView.id);
+      },
     ),
     ProfileButtonModel(
       label: 'Logout',

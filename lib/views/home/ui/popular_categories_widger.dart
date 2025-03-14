@@ -19,10 +19,9 @@ class PopularCategoriesWidger extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 8,
+      spacing: 12,
       children: [
         const Text('Popular Categories', style: AppTextStyles.regular20),
-
         SizedBox(
           height: 85,
           child: ListView.builder(
