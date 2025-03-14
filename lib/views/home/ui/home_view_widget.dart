@@ -1,4 +1,6 @@
+import 'package:e_commerce_app/core/helpers/assets.dart';
 import 'package:e_commerce_app/core/utils/custom_text_search_field.dart';
+import 'package:e_commerce_app/views/home/ui/popular_categories_widger.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewWidget extends StatelessWidget {
@@ -12,8 +14,12 @@ class HomeViewWidget extends StatelessWidget {
         child: CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            SliverToBoxAdapter(child: SizedBox(height: 16,),),
-            SliverToBoxAdapter(child: CustomTextSearchField(),),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            const SliverToBoxAdapter(child: CustomTextSearchField()),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            SliverToBoxAdapter(child: Image.asset(Assets.imagesPoster)),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            const SliverToBoxAdapter(child: PopularCategoriesWidger()),
           ],
         ),
       ),

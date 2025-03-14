@@ -19,3 +19,10 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+flutter_assets:
+  assets_path: assets/images/
+  output_path: lib/core/helpers
+  filename: assets.dart
+  field_prefix:
