@@ -3,8 +3,20 @@ import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:e_commerce_app/core/utils/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-class ForgotPasswordViewBody extends StatelessWidget {
+class ForgotPasswordViewBody extends StatefulWidget {
   const ForgotPasswordViewBody({super.key});
+
+  @override
+  State<ForgotPasswordViewBody> createState() => _ForgotPasswordViewBodyState();
+}
+
+class _ForgotPasswordViewBodyState extends State<ForgotPasswordViewBody> {
+  TextEditingController controller = TextEditingController();
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +43,10 @@ class ForgotPasswordViewBody extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 spacing: 16,
                 children: [
-                  const CustomTextFormField(labelText: 'Email'),
+                  CustomTextFormField(
+                    labelText: 'Email',
+                    controller: controller,
+                  ),
                   Align(
                     child: ElevatedButton(
                       onPressed: () {},

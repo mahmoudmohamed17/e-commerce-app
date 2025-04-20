@@ -10,11 +10,13 @@ class CustomTextFormField extends StatefulWidget {
     this.onFieldSubmitted,
     this.onChanged,
     this.textInputType = TextInputType.text,
+    required this.controller,
   });
   final String labelText;
   final void Function(String)? onFieldSubmitted;
   final void Function(String)? onChanged;
   final TextInputType textInputType;
+  final TextEditingController controller;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -25,6 +27,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       style: AppTextStyles.regular16,
       onFieldSubmitted: widget.onFieldSubmitted,
       onChanged: widget.onChanged,
@@ -66,4 +69,3 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     );
   }
 }
-

@@ -33,4 +33,8 @@ class AuthCubit extends Cubit<AuthState> {
       emit(SignupFailure(message: e.toString()));
     }
   }
+
+  void update() {
+    emit(AuthInitial());
+  }
 }

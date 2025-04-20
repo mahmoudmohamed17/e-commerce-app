@@ -4,8 +4,25 @@ import 'package:e_commerce_app/core/utils/custom_text_form_field.dart';
 import 'package:e_commerce_app/views/auth/ui/already_have_account_widget.dart';
 import 'package:flutter/material.dart';
 
-class SignupViewBody extends StatelessWidget {
+class SignupViewBody extends StatefulWidget {
   const SignupViewBody({super.key});
+
+  @override
+  State<SignupViewBody> createState() => _SignupViewBodyState();
+}
+
+class _SignupViewBodyState extends State<SignupViewBody> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +50,18 @@ class SignupViewBody extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 spacing: 16,
                 children: [
-                  const CustomTextFormField(labelText: 'Name'),
-                  const CustomTextFormField(labelText: 'Email'),
-                  const CustomTextFormField(labelText: 'Password'),
+                  CustomTextFormField(
+                    labelText: 'Name',
+                    controller: nameController,
+                  ),
+                  CustomTextFormField(
+                    labelText: 'Email',
+                    controller: emailController,
+                  ),
+                  CustomTextFormField(
+                    labelText: 'Password',
+                    controller: passwordController,
+                  ),
                   CustomSocialButton(label: 'Signup', onTap: () {}),
                   CustomSocialButton(label: 'Signup with Google', onTap: () {}),
                   const AlreadyHaveAccountWidget(),
