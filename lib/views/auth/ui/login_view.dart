@@ -17,7 +17,7 @@ class LoginView extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          snackBar(context, 'Login Successfully!');
+          snackBar(context, 'Login Successfuly!');
           context.pushNamed(MainView.id);
         }
         if (state is LoginFailure) {
