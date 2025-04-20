@@ -34,6 +34,8 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  // For any updates not related to the primary ones, like
+  // for text fields
   void update() {
     emit(AuthInitial());
   }
