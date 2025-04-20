@@ -39,8 +39,10 @@ class AuthCubit extends Cubit<AuthState> {
   GoogleSignInAccount? googleUser;
   Future<void> signInWithGoogle() async {
     emit(GoogleSignInLoading());
-    const webClientId = ApiStrings.appWebClientId;
-    final GoogleSignIn googleSignIn = GoogleSignIn(clientId: webClientId);
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+      clientId: ApiStrings.appAndroidClientId,
+      serverClientId: ApiStrings.appWebClientId,
+    );
     googleUser = await googleSignIn.signIn();
     if (googleUser == null) {
       return;
@@ -59,9 +61,22 @@ class AuthCubit extends Cubit<AuthState> {
       provider: OAuthProvider.google,
       idToken: idToken!,
       accessToken: accessToken,
-      
     );
     emit(GoogleSignInSuccess());
+
+    // final result = await supabase.auth.signInWithOAuth(
+    //   OAuthProvider.google,
+    //   authScreenLaunchMode: LaunchMode.externalNonBrowserApplication,
+    // );
+    // if (result) {
+    //   emit(GoogleSignInSuccess());
+    // } else {
+    //   emit(
+    //     GoogleSignInFailure(
+    //       message: 'There is an error fetching some credentials',
+    //     ),
+    //   );
+    // }
   }
 
   // For any updates not related to the primary ones, like
