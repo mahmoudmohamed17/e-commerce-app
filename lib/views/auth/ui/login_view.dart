@@ -1,5 +1,6 @@
 import 'package:e_commerce_app/core/helpers/custom_loading_indicato.dart';
 import 'package:e_commerce_app/core/helpers/routes.dart';
+import 'package:e_commerce_app/core/helpers/snack_bar.dart';
 import 'package:e_commerce_app/views/auth/logic/cubit/auth_cubit.dart';
 import 'package:e_commerce_app/views/auth/ui/login_view_body.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,11 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is LoginFailure) {
+          snackBar(context, state.message);
+        }
+      },
       builder: (context, state) {
         return CustomLoadingIndicato(
           inAsyncCall: state is LoginLoading,

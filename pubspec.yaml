@@ -5,6 +5,7 @@ version: 1.0.0+1
 environment:
   sdk: ^3.7.0
 dependencies:
+  another_flushbar: ^1.12.30
   bloc: ^9.0.0
   cached_network_image: ^3.4.1
   cupertino_icons: ^1.0.8
