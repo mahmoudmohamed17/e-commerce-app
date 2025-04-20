@@ -93,7 +93,9 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                     ),
                     CustomSocialButton(
                       label: 'Login with Google',
-                      onTap: () {},
+                      onTap: () {
+                        context.read<AuthCubit>().signInWithGoogle();
+                      },
                     ),
                     const DontHaveAccount(),
                   ],

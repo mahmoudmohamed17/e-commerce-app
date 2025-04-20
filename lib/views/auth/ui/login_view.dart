@@ -16,11 +16,14 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is LoginSuccess) {
+        if (state is LoginSuccess || state is GoogleSignInSuccess) {
           context.pushNamed(MainView.id);
           snackBar(context, 'Login Successfuly!');
         }
         if (state is LoginFailure) {
+          snackBar(context, state.message);
+        }
+        if (state is GoogleSignInFailure) {
           snackBar(context, state.message);
         }
       },
