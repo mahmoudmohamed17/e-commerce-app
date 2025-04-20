@@ -38,7 +38,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           return null;
         }
       },
-      obscureText: widget.labelText == 'Password' ? _isVisible : false,
+      obscureText: widget.labelText == 'Password' ? !_isVisible : false,
       keyboardType: widget.textInputType,
       decoration: InputDecoration(
         label: Text(
@@ -57,7 +57,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     });
                   },
                   icon: Icon(
-                    _isVisible ? Icons.visibility_off : Icons.visibility,
+                    _isVisible ? Icons.visibility : Icons.visibility_off,
                     color: Colors.grey[800],
                   ),
                 )

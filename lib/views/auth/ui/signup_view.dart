@@ -17,8 +17,8 @@ class SignupView extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is SignupSuccess) {
-          snackBar(context, 'Registered Successfuly!');
           context.pushNamed(MainView.id);
+          snackBar(context, 'Registered Successfuly!');
         }
         if (state is SignupFailure) {
           snackBar(context, state.message);
