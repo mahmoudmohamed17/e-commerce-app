@@ -1,8 +1,10 @@
 import 'package:e_commerce_app/core/helpers/app_routing.dart';
 import 'package:e_commerce_app/core/helpers/routes.dart';
+import 'package:e_commerce_app/core/utils/initialize_supabase.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  await initializeSupabase();
   runApp(const MyApp());
 }
 
