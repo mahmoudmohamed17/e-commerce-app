@@ -10,12 +10,12 @@ class CustomBlocObserver implements BlocObserver {
 
   @override
   void onClose(BlocBase bloc) {
-    log('Bloc $bloc Close');
+    log('Close $bloc');
   }
 
   @override
   void onCreate(BlocBase bloc) {
-    log('Bloc $bloc Create');
+    log('Create $bloc');
   }
 
   @override
