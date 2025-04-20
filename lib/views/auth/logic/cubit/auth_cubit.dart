@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 part 'auth_state.dart';
