@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/services/supabase_service.dart';
+import 'package:e_commerce_app/core/utils/app_constants.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 part 'auth_state.dart';
@@ -23,15 +24,21 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> signup(String email, String password) async {
+  Future<void> signup({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
     emit(SignupLoading());
     try {
-      supabase.signup(email, password);
+      await supabase.signup(email, password);
+      await addUserData(name, email);
       emit(SignupSuccess());
     } on AuthException catch (e) {
       log('Error with AuthException: ${e.toString()}');
       emit(SignupFailure(message: e.message));
     } catch (e) {
+      log('Error with AuthException: ${e.toString()}');
       emit(SignupFailure(message: e.toString()));
     }
   }
@@ -71,6 +78,15 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(PasswordResetFailure(message: e.toString()));
     }
+  }
+
+  Future<void> addUserData(String name, String email) async {
+    await supabase.addData(AppConstants.usersDatabaseTable, {
+      'id': SupabaseService.supabaseClient.auth.currentUser?.id,
+      'name': name,
+      'email': email,
+      'created_at': DateTime.now().toIso8601String(),
+    });
   }
 
   /// For any updates not related to the primary ones

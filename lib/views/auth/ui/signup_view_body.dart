@@ -74,8 +74,9 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                       onTap: () {
                         if (formKey.currentState!.validate()) {
                           context.read<AuthCubit>().signup(
-                            emailController.text,
-                            passwordController.text,
+                            email: emailController.text,
+                            password: passwordController.text,
+                            name: nameController.text,
                           );
                         } else {
                           validateMode = AutovalidateMode.always;

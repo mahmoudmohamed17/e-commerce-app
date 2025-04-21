@@ -3,14 +3,14 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseService {
-  var supabase = Supabase.instance.client;
+  static var supabaseClient = Supabase.instance.client;
 
   Future<void> login(String email, password) async {
-    await supabase.auth.signInWithPassword(password: password, email: email);
+    await supabaseClient.auth.signInWithPassword(password: password, email: email);
   }
 
   Future<void> signup(String email, password) async {
-    await supabase.auth.signUp(password: password, email: email);
+    await supabaseClient.auth.signUp(password: password, email: email);
   }
 
   Future<bool> signInWithGoogle() async {
@@ -28,7 +28,7 @@ class SupabaseService {
     if (accessToken == null || idToken == null) {
       return false;
     }
-    await supabase.auth.signInWithIdToken(
+    await supabaseClient.auth.signInWithIdToken(
       provider: OAuthProvider.google,
       idToken: idToken,
       accessToken: accessToken,
@@ -37,14 +37,14 @@ class SupabaseService {
   }
 
   Future<void> signOut() async {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
   }
 
   Future<void> resetPassword(String email) async {
-    await supabase.auth.resetPasswordForEmail(email);
+    await supabaseClient.auth.resetPasswordForEmail(email);
   }
 
   Future<void> addData(String table, Map<String, dynamic> data) async {
-    await supabase.from(table).insert(data);
+    await supabaseClient.from(table).insert(data);
   }
 }
