@@ -32,7 +32,7 @@ class LoginView extends StatelessWidget {
       },
       builder: (context, state) {
         return CustomLoadingIndicator(
-          inAsyncCall: state is LoginLoading,
+          inAsyncCall: state is LoginLoading || state is GoogleSignInLoading,
           child: const Scaffold(body: SafeArea(child: LoginViewBody())),
         );
       },

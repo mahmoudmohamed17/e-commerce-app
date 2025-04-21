@@ -1,16 +1,30 @@
 import 'package:e_commerce_app/core/utils/api_strings.dart';
+import 'package:e_commerce_app/core/utils/app_constants.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseService {
   static var supabaseClient = Supabase.instance.client;
 
-  Future<void> login(String email, password) async {
-    await supabaseClient.auth.signInWithPassword(password: password, email: email);
+  Future<bool> login(String email, String password) async {
+    try {
+      await supabaseClient.auth.signInWithPassword(
+        password: password,
+        email: email,
+      );
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  Future<void> signup(String email, password) async {
-    await supabaseClient.auth.signUp(password: password, email: email);
+  Future<bool> signup(String email, String password) async {
+    try {
+      await supabaseClient.auth.signUp(password: password, email: email);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<bool> signInWithGoogle() async {
@@ -33,18 +47,34 @@ class SupabaseService {
       idToken: idToken,
       accessToken: accessToken,
     );
+    await addData(AppConstants.usersDatabaseTable, {
+      'id': googleUser.id,
+      'name': googleUser.displayName,
+      'email': googleUser.email,
+      'created_at': DateTime.now().toIso8601String(),
+    });
     return true;
   }
 
-  Future<void> signOut() async {
-    await supabaseClient.auth.signOut();
+  Future<bool> signOut() async {
+    try {
+      await supabaseClient.auth.signOut();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  Future<void> resetPassword(String email) async {
-    await supabaseClient.auth.resetPasswordForEmail(email);
+  Future<bool> resetPassword(String email) async {
+    try {
+      await supabaseClient.auth.resetPasswordForEmail(email);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<void> addData(String table, Map<String, dynamic> data) async {
-    await supabaseClient.from(table).insert(data);
+    await supabaseClient.from(table).upsert(data);
   }
 }
