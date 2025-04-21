@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
-import 'package:e_commerce_app/core/utils/api_strings.dart';
+import 'package:e_commerce_app/core/services/supabase_service.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 part 'auth_state.dart';
@@ -8,12 +8,12 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
-  var supabase = Supabase.instance.client;
+  var supabase = SupabaseService();
 
   Future<void> login(String email, String password) async {
     emit(LoginLoading());
     try {
-      await supabase.auth.signInWithPassword(password: password, email: email);
+      supabase.login(email, password);
       emit(LoginSuccess());
     } on AuthException catch (e) {
       log('Error with AuthException: ${e.toString()}');
@@ -26,7 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signup(String email, String password) async {
     emit(SignupLoading());
     try {
-      await supabase.auth.signUp(password: password, email: email);
+      supabase.signup(email, password);
       emit(SignupSuccess());
     } on AuthException catch (e) {
       log('Error with AuthException: ${e.toString()}');
@@ -39,36 +39,18 @@ class AuthCubit extends Cubit<AuthState> {
   GoogleSignInAccount? googleUser;
   Future<void> signInWithGoogle() async {
     emit(GoogleSignInLoading());
-    final GoogleSignIn googleSignIn = GoogleSignIn(
-      clientId: ApiStrings.appAndroidClientId,
-      serverClientId: ApiStrings.appWebClientId,
-    );
-    googleUser = await googleSignIn.signIn();
-    if (googleUser == null) {
-      return;
+    var result = await supabase.signInWithGoogle();
+    if (result) {
+      emit(GoogleSignInSuccess());
+    } else {
+      emit(GoogleSignInFailure(message: 'Google Sign In failed'));
     }
-    final googleAuth = await googleUser!.authentication;
-    final accessToken = googleAuth.accessToken;
-    final idToken = googleAuth.idToken;
-    if (accessToken == null || idToken == null) {
-      emit(
-        GoogleSignInFailure(
-          message: 'There is an error fetching some credentials',
-        ),
-      );
-    }
-    await supabase.auth.signInWithIdToken(
-      provider: OAuthProvider.google,
-      idToken: idToken!,
-      accessToken: accessToken,
-    );
-    emit(GoogleSignInSuccess());
   }
 
   Future<void> signout() async {
     emit(SignOutLoading());
     try {
-      await supabase.auth.signOut();
+      supabase.signOut();
       emit(SignOutSuccess());
     } on AuthException catch (e) {
       log('Error with AuthException: ${e.toString()}');
@@ -81,7 +63,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> resetPassword(String email) async {
     emit(PasswordResetLoading());
     try {
-      await supabase.auth.resetPasswordForEmail(email);
+      supabase.resetPassword(email);
       emit(PasswordResetSuccess());
     } on AuthException catch (e) {
       log('Error with AuthException: ${e.toString()}');
