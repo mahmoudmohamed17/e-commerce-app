@@ -2,6 +2,8 @@ import 'package:e_commerce_app/core/helpers/custom_loading_indicator.dart';
 import 'package:e_commerce_app/core/helpers/navigation_extension.dart';
 import 'package:e_commerce_app/core/helpers/routes.dart';
 import 'package:e_commerce_app/core/helpers/snack_bar.dart';
+import 'package:e_commerce_app/core/services/shared_prefs.dart';
+import 'package:e_commerce_app/core/utils/app_constants.dart';
 import 'package:e_commerce_app/views/auth/logic/cubit/auth_cubit.dart';
 import 'package:e_commerce_app/views/auth/ui/login_view_body.dart';
 import 'package:e_commerce_app/views/main_view/ui/main_view.dart';
@@ -19,6 +21,7 @@ class LoginView extends StatelessWidget {
         if (state is LoginSuccess || state is GoogleSignInSuccess) {
           context.pushNamed(MainView.id);
           snackBar(context, 'Login Successfuly!');
+          SharedPrefs.setBool(AppConstants.isUserAuthenticated, true);
         }
         if (state is LoginFailure) {
           snackBar(context, state.message);
