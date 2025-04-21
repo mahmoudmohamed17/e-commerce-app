@@ -1,4 +1,4 @@
-import 'package:e_commerce_app/core/helpers/custom_loading_indicato.dart';
+import 'package:e_commerce_app/core/helpers/custom_loading_indicator.dart';
 import 'package:e_commerce_app/core/helpers/navigation_extension.dart';
 import 'package:e_commerce_app/core/helpers/routes.dart';
 import 'package:e_commerce_app/core/helpers/snack_bar.dart';
@@ -25,7 +25,7 @@ class SignupView extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return CustomLoadingIndicato(
+        return CustomLoadingIndicator(
           inAsyncCall: state is SignupLoading,
           child: const Scaffold(body: SafeArea(child: SignupViewBody())),
         );
