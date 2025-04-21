@@ -45,8 +45,8 @@ class ProfileViewWidget extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is SignOutSuccess) {
-          snackBar(context, 'Logout Successfully!');
           context.pushReplacementNamed(Routes.loginView);
+          snackBar(context, 'Logout Successfully!');
         }
         if (state is SignOutFailure) {
           snackBar(context, state.message);
