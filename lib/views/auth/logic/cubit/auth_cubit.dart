@@ -78,6 +78,19 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> resetPassword(String email) async {
+    emit(PasswordResetLoading());
+    try {
+      await supabase.auth.resetPasswordForEmail(email);
+      emit(PasswordResetSuccess());
+    } on AuthException catch (e) {
+      log('Error with AuthException: ${e.toString()}');
+      emit(PasswordResetFailure(message: e.message));
+    } catch (e) {
+      emit(PasswordResetFailure(message: e.toString()));
+    }
+  }
+
   /// For any updates not related to the primary ones
   void update() {
     emit(AuthInitial());

@@ -43,3 +43,13 @@ final class SignOutFailure extends AuthState {
 
   SignOutFailure({required this.message});
 }
+
+final class PasswordResetLoading extends AuthState {}
+
+final class PasswordResetSuccess extends AuthState {}
+
+final class PasswordResetFailure extends AuthState {
+  final String message;
+
+  PasswordResetFailure({required this.message});
+}
