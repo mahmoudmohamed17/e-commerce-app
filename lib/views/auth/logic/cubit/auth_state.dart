@@ -33,3 +33,13 @@ final class GoogleSignInFailure extends AuthState {
 
   GoogleSignInFailure({required this.message});
 }
+
+final class SignOutLoading extends AuthState {}
+
+final class SignOutSuccess extends AuthState {}
+
+final class SignOutFailure extends AuthState {
+  final String message;
+
+  SignOutFailure({required this.message});
+}

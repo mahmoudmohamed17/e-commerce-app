@@ -63,24 +63,22 @@ class AuthCubit extends Cubit<AuthState> {
       accessToken: accessToken,
     );
     emit(GoogleSignInSuccess());
-
-    // final result = await supabase.auth.signInWithOAuth(
-    //   OAuthProvider.google,
-    //   authScreenLaunchMode: LaunchMode.externalNonBrowserApplication,
-    // );
-    // if (result) {
-    //   emit(GoogleSignInSuccess());
-    // } else {
-    //   emit(
-    //     GoogleSignInFailure(
-    //       message: 'There is an error fetching some credentials',
-    //     ),
-    //   );
-    // }
   }
 
-  // For any updates not related to the primary ones, like
-  // for text fields
+  Future<void> signout() async {
+    emit(SignOutLoading());
+    try {
+      await supabase.auth.signOut();
+      emit(SignOutSuccess());
+    } on AuthException catch (e) {
+      log('Error with AuthException: ${e.toString()}');
+      emit(SignOutFailure(message: e.message));
+    } catch (e) {
+      emit(SignOutFailure(message: e.toString()));
+    }
+  }
+
+  /// For any updates not related to the primary ones
   void update() {
     emit(AuthInitial());
   }
