@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/helpers/app_colors.dart';
 import 'package:e_commerce_app/core/helpers/custom_loading_indicator.dart';
 import 'package:e_commerce_app/core/helpers/custom_profile_button.dart';
 import 'package:e_commerce_app/core/helpers/navigation_extension.dart';
+import 'package:e_commerce_app/core/helpers/routes.dart';
 import 'package:e_commerce_app/core/helpers/snack_bar.dart';
 import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:e_commerce_app/views/auth/logic/cubit/auth_cubit.dart';
@@ -45,6 +46,7 @@ class ProfileViewWidget extends StatelessWidget {
       listener: (context, state) {
         if (state is SignOutSuccess) {
           snackBar(context, 'Logout Successfully!');
+          context.pushReplacementNamed(Routes.loginView);
         }
         if (state is SignOutFailure) {
           snackBar(context, state.message);
