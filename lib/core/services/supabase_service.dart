@@ -77,7 +77,7 @@ class SupabaseService {
     final response = await supabaseClient
         .from(AppConstants.usersDatabaseTable)
         .select()
-        .eq('id', supabaseClient.auth.currentUser!.id);
+        .eq('user_id', supabaseClient.auth.currentUser!.id);
     return UserModel.fromJson(response[0]);
   }
 }

@@ -78,9 +78,9 @@ class AuthCubit extends Cubit<AuthState> {
     await supabase.addUserData(
       table: AppConstants.usersDatabaseTable,
       data: {
-        'id': SupabaseService.supabaseClient.auth.currentUser?.id,
-        'name': name,
-        'email': email,
+        'userid': SupabaseService.supabaseClient.auth.currentUser?.id,
+        'user_name': name,
+        'user_email': email,
         'created_at': DateTime.now().toIso8601String(),
       },
     );
