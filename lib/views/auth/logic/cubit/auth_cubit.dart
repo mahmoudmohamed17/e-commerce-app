@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/services/supabase_service.dart';
 import 'package:e_commerce_app/core/utils/app_constants.dart';
+import 'package:e_commerce_app/views/auth/logic/models/user_model.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -10,8 +11,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> login(String email, String password) async {
     emit(LoginLoading());
-    var result = await supabase.login(email, password);
+    var result = await supabase.login(email: email, password: password);
     if (result) {
+      await getUserData();
       emit(LoginSuccess());
     } else {
       emit(LoginFailure(message: 'Login failed'));
@@ -24,9 +26,10 @@ class AuthCubit extends Cubit<AuthState> {
     required String name,
   }) async {
     emit(SignupLoading());
-    var result = await supabase.signup(email, password);
+    var result = await supabase.signup(email: email, password: password);
     if (result) {
-      await addUserData(name, email);
+      await addUserData(name: name, email: email);
+      await getUserData();
       emit(SignupSuccess());
     } else {
       emit(SignupFailure(message: 'Signup failed'));
@@ -36,10 +39,13 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signInWithGoogle() async {
     emit(GoogleSignInLoading());
     var result = await supabase.signInWithGoogle();
-    if (result) {
-      emit(GoogleSignInSuccess());
-    } else {
+    if (result == null) {
       emit(GoogleSignInFailure(message: 'Google Sign In failed'));
+      return;
+    } else {
+      await addUserData(name: result.displayName ?? '', email: result.email);
+      await getUserData();
+      emit(GoogleSignInSuccess());
     }
   }
 
@@ -55,7 +61,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> resetPassword(String email) async {
     emit(PasswordResetLoading());
-    var result = await supabase.resetPassword(email);
+    var result = await supabase.resetPassword(email: email);
     if (result) {
       emit(PasswordResetSuccess());
     } else {
@@ -63,13 +69,29 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> addUserData(String name, String email) async {
-    await supabase.addData(AppConstants.usersDatabaseTable, {
-      'id': SupabaseService.supabaseClient.auth.currentUser?.id,
-      'name': name,
-      'email': email,
-      'created_at': DateTime.now().toIso8601String()
-    });
+  Future<void> addUserData({
+    required String name,
+    required String email,
+  }) async {
+    await supabase.addUserData(
+      table: AppConstants.usersDatabaseTable,
+      data: {
+        'id': SupabaseService.supabaseClient.auth.currentUser?.id,
+        'name': name,
+        'email': email,
+        'created_at': DateTime.now().toIso8601String(),
+      },
+    );
+  }
+
+  Future<void> getUserData() async {
+    emit(UserDataLoading());
+    var result = await supabase.getUserData();
+    if (result != null) {
+      emit(UserDataSuccess(userData: result));
+    } else {
+      emit(UserDataFailure(message: 'Failed to get user data'));
+    }
   }
 
   /// For any updates not related to the primary ones

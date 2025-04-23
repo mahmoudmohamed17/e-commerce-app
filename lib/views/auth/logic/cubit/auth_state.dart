@@ -53,3 +53,17 @@ final class PasswordResetFailure extends AuthState {
 
   PasswordResetFailure({required this.message});
 }
+
+final class UserDataLoading extends AuthState {}
+
+final class UserDataSuccess extends AuthState {
+  final UserModel userData;
+
+  UserDataSuccess({required this.userData});
+}
+
+final class UserDataFailure extends AuthState {
+  final String message;
+
+  UserDataFailure({required this.message});
+}
