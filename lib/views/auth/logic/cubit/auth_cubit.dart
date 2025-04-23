@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/services/supabase_service.dart';
 import 'package:e_commerce_app/core/utils/app_constants.dart';
@@ -88,6 +90,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(UserDataLoading());
     var result = await supabase.getUserData();
     if (result != null) {
+      log('User data: ${result.toJson()}');
       emit(UserDataSuccess(userData: result));
     } else {
       emit(UserDataFailure(message: 'Failed to get user data'));
