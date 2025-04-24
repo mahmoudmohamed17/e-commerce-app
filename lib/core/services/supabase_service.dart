@@ -75,7 +75,7 @@ class SupabaseService {
 
   Future<UserModel?> getUserData() async {
     final response = await supabaseClient
-        .from(AppConstants.usersDatabaseTable)
+        .from(AppConstants.usersTable)
         .select()
         .eq('user_id', supabaseClient.auth.currentUser!.id);
     return UserModel.fromJson(response[0]);

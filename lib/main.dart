@@ -2,6 +2,7 @@ import 'package:e_commerce_app/core/helpers/app_routing.dart';
 import 'package:e_commerce_app/core/helpers/custom_bloc_observer.dart';
 import 'package:e_commerce_app/core/helpers/routes.dart';
 import 'package:e_commerce_app/core/services/shared_prefs.dart';
+import 'package:e_commerce_app/core/utils/app_constants.dart';
 import 'package:e_commerce_app/core/utils/initialize_supabase.dart';
 import 'package:e_commerce_app/views/auth/logic/cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Shoply',
         theme: ThemeData(useMaterial3: true),
-        initialRoute: Routes.loginView,
+        initialRoute:
+            SharedPrefs.getBool(AppConstants.isUserAuthenticated)
+                ? Routes.mainView
+                : Routes.loginView,
         onGenerateRoute: AppRouting.onGeneratedRoute,
       ),
     );
