@@ -2,9 +2,7 @@ import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class UserComment extends StatelessWidget {
-  const UserComment({
-    super.key,
-  });
+  const UserComment({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -20,7 +20,7 @@ class CategoryItem extends StatelessWidget {
           ),
           height: 60,
           width: 60,
-          child: Center(child: Icon(model.icon, color: Colors.white, size: 35,)),
+          child: Center(child: Icon(model.icon, color: Colors.white, size: 35)),
         ),
         FittedBox(
           fit: BoxFit.scaleDown,

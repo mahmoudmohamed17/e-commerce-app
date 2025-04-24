@@ -11,7 +11,7 @@ class ProductDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context, 'Product Details'),
-      body: const ProductDetailsViewBody()
+      body: const ProductDetailsViewBody(),
     );
   }
 }

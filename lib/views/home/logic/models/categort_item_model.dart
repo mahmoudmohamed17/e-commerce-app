@@ -5,5 +5,4 @@ class CategortItemModel {
   final IconData icon;
 
   CategortItemModel({required this.title, required this.icon});
-
 }

@@ -16,7 +16,9 @@ class AppRouting {
       case Routes.signupView:
         return MaterialPageRoute(builder: (context) => const SignupView());
       case Routes.forgotPasswordView:
-        return MaterialPageRoute(builder: (context) => const ForgotPasswordView());
+        return MaterialPageRoute(
+          builder: (context) => const ForgotPasswordView(),
+        );
       case Routes.mainView:
         return MaterialPageRoute(builder: (context) => const MainView());
       case Routes.editNameView:
@@ -24,7 +26,9 @@ class AppRouting {
       case Routes.myOrdersView:
         return MaterialPageRoute(builder: (context) => const MyOrdersView());
       case Routes.productDetailsView:
-        return MaterialPageRoute(builder: (context) => const ProductDetailsView());
+        return MaterialPageRoute(
+          builder: (context) => const ProductDetailsView(),
+        );
       default:
         return MaterialPageRoute(builder: (context) => const Scaffold());
     }
