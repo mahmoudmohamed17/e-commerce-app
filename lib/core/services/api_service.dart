@@ -15,7 +15,7 @@ class ApiService {
     _dio.interceptors.add(DioInterceptor());
   }
 
-  Future<Map<String, dynamic>> get({required String endpoint}) async {
+  Future<List<Map<String, dynamic>>> get({required String endpoint}) async {
     var response = await _dio.get('${ApiStrings.apiBaseUrl}$endpoint');
     return response.data;
   }
