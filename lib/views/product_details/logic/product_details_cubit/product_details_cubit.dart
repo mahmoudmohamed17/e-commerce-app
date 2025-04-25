@@ -28,7 +28,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       emit(
         GetProductRateSuccess(
           productAvgRate: productAvgRate,
-          currentUserRate: currentUserRate,
+          currentUserRate: currentUserRate!,
         ),
       );
     } catch (e) {
@@ -36,13 +36,14 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     }
   }
 
-  double getCurrentUserRate(List<RateModel> rates) {
+  double? getCurrentUserRate(List<RateModel> rates) {
     var currentUserId = SupabaseService.supabaseClient.auth.currentUser?.id;
     return rates
-        .where((item) => item.forUser == currentUserId)
-        .toList()
-        .first
-        .rate!;
+            .where((item) => item.forUser == currentUserId)
+            .toList()
+            .first
+            .rate ??
+        5.0;
   }
 
   double getAverageRate(List<RateModel> rates) {
