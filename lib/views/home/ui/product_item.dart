@@ -1,5 +1,6 @@
-import 'package:e_commerce_app/core/helpers/assets.dart';
 import 'package:e_commerce_app/core/helpers/navigation_extension.dart';
+import 'package:e_commerce_app/core/models/product_model/product_model.dart';
+import 'package:e_commerce_app/core/widgets/custom_product_image.dart';
 import 'package:e_commerce_app/views/home/ui/discount_badge.dart';
 import 'package:e_commerce_app/views/home/ui/product_name_and_heart_button.dart';
 import 'package:e_commerce_app/views/home/ui/product_price_and_buy_button.dart';
@@ -7,8 +8,8 @@ import 'package:e_commerce_app/views/product_details/ui/product_details_view.dar
 import 'package:flutter/material.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({super.key});
-
+  const ProductItem({super.key, required this.product});
+  final ProductModel product;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -33,25 +34,20 @@ class ProductItem extends StatelessWidget {
                     bottomRight: Radius.circular(16),
                     bottomLeft: Radius.circular(16),
                   ),
-                  child: Image.asset(
-                    Assets.imagesProduct,
-                    height: 220,
-                    width: double.infinity,
-                    fit: BoxFit.fill,
-                  ),
+                  child: CustomProductImage(imageUrl: product.productImage!),
                 ),
-                const ProductNameAndHeartButton(),
+                ProductNameAndHeartButton(product: product),
                 const SizedBox(height: 8),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: ProductPriceAndBuyButton(),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ProductPriceAndBuyButton(product: product,),
                 ),
                 const SizedBox(height: 16),
               ],
             ),
           ),
         ),
-        const Positioned(top: 0, left: 0, child: DiscountBadge()),
+         Positioned(top: 0, left: 0, child: DiscountBadge(discount: product.productSale!,)),
       ],
     );
   }

@@ -3,7 +3,8 @@ import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class DiscountBadge extends StatelessWidget {
-  const DiscountBadge({super.key});
+  const DiscountBadge({super.key, required this.discount});
+  final double discount;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class DiscountBadge extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(8),
       child: Text(
-        '10% OFF',
+        '${discount.toStringAsFixed(0)}%',
         style: AppTextStyles.regular12.copyWith(color: Colors.white),
       ),
     );

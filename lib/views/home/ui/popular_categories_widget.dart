@@ -3,8 +3,8 @@ import 'package:e_commerce_app/views/home/logic/models/categort_item_model.dart'
 import 'package:e_commerce_app/views/home/ui/category_item.dart';
 import 'package:flutter/material.dart';
 
-class PopularCategoriesWidger extends StatelessWidget {
-  const PopularCategoriesWidger({super.key});
+class PopularCategoriesWidget extends StatelessWidget {
+  const PopularCategoriesWidget({super.key});
 
   static final List<CategortItemModel> _categories = [
     CategortItemModel(title: 'Sport', icon: Icons.sports),
