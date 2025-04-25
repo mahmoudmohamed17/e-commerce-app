@@ -11,12 +11,10 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
 
   final _apiService = ApiService();
 
-  double productAvgRate = 0.0;
-
   /// Note: We get all the product's rates using its id
   /// Then we could make additional filtering on the client side
   /// to get the rates for the current user
-  Future<void> getProductRates(int productId) async {
+  Future<void> getProductRates(String productId) async {
     emit(GetProductRateLoading());
     try {
       var data = await _apiService.get(
@@ -24,12 +22,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
         queryParameters: {'select': '*', 'for_product': 'eq.$productId'},
       );
       var rates = data.map((e) => RateModel.fromJson(e)).toList();
-      productAvgRate = getAverageRate(rates);
-      emit(
-        GetProductRateSuccess(
-          rates: data.map((e) => RateModel.fromJson(e)).toList(),
-        ),
-      );
+      var productAvgRate = getAverageRate(rates);
+      emit(GetProductRateSuccess(productAvgRate: productAvgRate));
     } catch (e) {
       emit(GetProductRateFailure(message: e.toString()));
     }
