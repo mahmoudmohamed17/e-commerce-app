@@ -1,9 +1,7 @@
-import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/models/product_model/product_model.dart';
 import 'package:e_commerce_app/core/services/api_service.dart';
 import 'package:e_commerce_app/core/utils/app_constants.dart';
-import 'package:e_commerce_app/core/utils/parse_products_data.dart';
 import 'package:equatable/equatable.dart';
 part 'products_state.dart';
 
@@ -18,9 +16,11 @@ class ProductsCubit extends Cubit<ProductsState> {
         endpoint: AppConstants.productsTable,
         queryParameters: {'select': '*,favorite_products(*),purchases(*)'},
       );
-      var products = parseProductsData(data);
-      log('Products: $products');
-      emit(ProductsSuccess(products: products));
+      emit(
+        ProductsSuccess(
+          products: data.map((e) => ProductModel.fromJson(e)).toList(),
+        ),
+      );
     } catch (e) {
       emit(ProductsFailure(message: e.toString()));
     }

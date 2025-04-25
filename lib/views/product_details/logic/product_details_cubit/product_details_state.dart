@@ -11,6 +11,20 @@ final class ProductDetailsInitial extends ProductDetailsState {}
 
 final class GetProductRateLoading extends ProductDetailsState {}
 
-final class GetProductRateSuccess extends ProductDetailsState {}
+final class GetProductRateSuccess extends ProductDetailsState {
+  final List<RateModel> rates;
 
-final class GetProductRateFailure extends ProductDetailsState {}
+  const GetProductRateSuccess({required this.rates});
+
+  @override
+  List<Object> get props => [rates];
+}
+
+final class GetProductRateFailure extends ProductDetailsState {
+  final String message;
+
+  const GetProductRateFailure({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
