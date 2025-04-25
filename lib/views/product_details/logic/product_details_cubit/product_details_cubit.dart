@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/services/api_service.dart';
 import 'package:e_commerce_app/core/services/supabase_service.dart';
@@ -32,18 +34,22 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
         ),
       );
     } catch (e) {
+      log('Error: $e');
       emit(GetProductRateFailure(message: e.toString()));
     }
   }
 
   double? getCurrentUserRate(List<RateModel> rates) {
     var currentUserId = SupabaseService.supabaseClient.auth.currentUser?.id;
-    return rates
-            .where((item) => item.forUser == currentUserId)
-            .toList()
-            .first
-            .rate ??
-        0.0;
+    // 508f31ca-5e5b-43d6-9d10-ca8092a941b6 ==> ibrahim
+    if (rates.isNotEmpty) {
+      // Additional checks to ensure the current user ID is not null
+      // and the rates list is not empty
+      var found = rates.where((item) => item.forUser == currentUserId);
+      return found.isNotEmpty ? found.first.rate : 0.0;
+    } else {
+      return 0.0;
+    }
   }
 
   double getAverageRate(List<RateModel> rates) {

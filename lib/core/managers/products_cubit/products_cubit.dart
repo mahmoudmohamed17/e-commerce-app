@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/models/product_model/product_model.dart';
 import 'package:e_commerce_app/core/services/api_service.dart';
@@ -22,6 +24,7 @@ class ProductsCubit extends Cubit<ProductsState> {
         ),
       );
     } catch (e) {
+      log('Error: $e');
       emit(ProductsFailure(message: e.toString()));
     }
   }
