@@ -13,11 +13,15 @@ final class GetProductRateLoading extends ProductDetailsState {}
 
 final class GetProductRateSuccess extends ProductDetailsState {
   final double productAvgRate;
+  final double currentUserRate;
 
-  const GetProductRateSuccess({required this.productAvgRate});
+  const GetProductRateSuccess({
+    required this.productAvgRate,
+    required this.currentUserRate,
+  });
 
   @override
-  List<Object> get props => [productAvgRate];
+  List<Object> get props => [productAvgRate, currentUserRate];
 }
 
 final class GetProductRateFailure extends ProductDetailsState {

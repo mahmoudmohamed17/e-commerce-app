@@ -39,7 +39,11 @@ class ProductDetailsViewBody extends StatelessWidget {
                   ),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 16)),
-                 SliverToBoxAdapter(child: ProductRateAndHeartButton(productAvgRate: state.productAvgRate,)),
+                SliverToBoxAdapter(
+                  child: ProductRateAndHeartButton(
+                    productAvgRate: state.productAvgRate,
+                  ),
+                ),
                 const SliverToBoxAdapter(child: SizedBox(height: 16)),
                 SliverToBoxAdapter(
                   child: Text(
@@ -49,8 +53,10 @@ class ProductDetailsViewBody extends StatelessWidget {
                   ),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 16)),
-                const SliverToBoxAdapter(
-                  child: Center(child: ProductRatingBar()),
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: ProductRatingBar(currentRate: state.currentUserRate),
+                  ),
                 ),
                 const SliverToBoxAdapter(child: SizedBox(height: 16)),
                 const SliverToBoxAdapter(

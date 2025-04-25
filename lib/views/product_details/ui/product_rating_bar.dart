@@ -3,12 +3,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductRatingBar extends StatelessWidget {
-  const ProductRatingBar({super.key});
+  const ProductRatingBar({super.key, required this.currentRate});
+  final double currentRate;
 
   @override
   Widget build(BuildContext context) {
     return RatingBar.builder(
-      initialRating: 3,
+      initialRating: currentRate,
       minRating: 1,
       itemBuilder:
           (context, _) =>
