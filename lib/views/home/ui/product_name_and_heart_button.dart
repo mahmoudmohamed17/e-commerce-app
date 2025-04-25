@@ -14,9 +14,9 @@ final ProductModel product;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 16),
-          child: Text('Product Name', style: AppTextStyles.bold12),
+         Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Text(product.productName!, style: AppTextStyles.bold12),
         ),
         Padding(
           padding: const EdgeInsets.only(right: 16),

@@ -15,7 +15,10 @@ class ProductsCubit extends Cubit<ProductsState> {
     emit(ProductsLoading());
     try {
       var data = await _apiService.get(
-        endpoint: '${AppConstants.productsTable}?select=*',
+        endpoint: AppConstants.productsTable,
+        queryParameters: {
+          'select': '*,favorite_products(*),purchases(*)'
+        }
       );
       var products = parseProductsData(data);
       log('Products: $products');

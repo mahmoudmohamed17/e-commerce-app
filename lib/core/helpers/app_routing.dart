@@ -1,4 +1,5 @@
 import 'package:e_commerce_app/core/helpers/routes.dart';
+import 'package:e_commerce_app/core/models/product_model/product_model.dart';
 import 'package:e_commerce_app/views/auth/ui/forgot_password_view.dart';
 import 'package:e_commerce_app/views/auth/ui/login_view.dart';
 import 'package:e_commerce_app/views/auth/ui/signup_view.dart';
@@ -26,8 +27,9 @@ class AppRouting {
       case Routes.myOrdersView:
         return MaterialPageRoute(builder: (context) => const MyOrdersView());
       case Routes.productDetailsView:
+        final product = settings.arguments as ProductModel;
         return MaterialPageRoute(
-          builder: (context) => const ProductDetailsView(),
+          builder: (context) => ProductDetailsView(product: product),
         );
       default:
         return MaterialPageRoute(builder: (context) => const Scaffold());

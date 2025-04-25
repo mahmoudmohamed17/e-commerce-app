@@ -17,7 +17,7 @@ class ProductItem extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            context.pushNamed(ProductDetailsView.id);
+            context.pushNamed(ProductDetailsView.id, arguments: product);
           },
           child: Card(
             shape: RoundedRectangleBorder(
@@ -47,7 +47,7 @@ class ProductItem extends StatelessWidget {
             ),
           ),
         ),
-         Positioned(top: 0, left: 0, child: DiscountBadge(discount: product.productSale!,)),
+         Positioned(top: 0, left: 0, child: DiscountBadge(discount: product.productSale!.toInt(),)),
       ],
     );
   }

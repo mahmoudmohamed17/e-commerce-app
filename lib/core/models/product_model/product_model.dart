@@ -7,9 +7,9 @@ class ProductModel extends Equatable {
   final String? productId;
   final String? createdAt;
   final String? productName;
-  final double? productCurrentPrice;
-  final double? productOldPrice;
-  final double? productSale;
+  final num? productCurrentPrice;
+  final num? productOldPrice;
+  final num? productSale;
   final String? productDescription;
   final String? productCategory;
   final String? productImage;
@@ -34,9 +34,9 @@ class ProductModel extends Equatable {
     productId: json['product_id'] as String?,
     createdAt: json['created_at'] as String?,
     productName: json['product_name'] as String?,
-    productCurrentPrice: json['product_current_price'] as double?,
-    productOldPrice: json['product_old_price'] as double?,
-    productSale: json['product_sale'] as double?,
+    productCurrentPrice: json['product_current_price'] as num?,
+    productOldPrice: json['product_old_price'] as num?,
+    productSale: json['product_sale'] as num?,
     productDescription: json['product_description'] as String?,
     productCategory: json['product_category'] as String?,
     productImage: json['product_image'] as String?,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class DiscountBadge extends StatelessWidget {
   const DiscountBadge({super.key, required this.discount});
-  final double discount;
+  final int discount;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class DiscountBadge extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(8),
       child: Text(
-        '${discount.toStringAsFixed(0)}%',
+        '$discount%',
         style: AppTextStyles.regular12.copyWith(color: Colors.white),
       ),
     );

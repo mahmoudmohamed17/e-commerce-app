@@ -15,9 +15,15 @@ class ApiService {
     _dio.interceptors.add(DioInterceptor());
   }
 
-  Future<List<Map<String, dynamic>>> get({required String endpoint}) async {
-    var response = await _dio.get('${ApiStrings.apiBaseUrl}$endpoint');
-    return response.data;
+  Future<List<Map<String, dynamic>>> get({
+    required String endpoint,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    var response = await _dio.get(
+      '${ApiStrings.apiBaseUrl}$endpoint',
+      queryParameters: queryParameters,
+    );
+    return List<Map<String, dynamic>>.from(response.data);
   }
 
   Future<Map<String, dynamic>> post({
@@ -28,7 +34,7 @@ class ApiService {
       '${ApiStrings.apiBaseUrl}$endpoint',
       data: data,
     );
-    return response.data;
+    return Map<String, dynamic>.from(response.data);
   }
 
   // Similar to PUT; as used to update a resource
@@ -40,11 +46,11 @@ class ApiService {
       '${ApiStrings.apiBaseUrl}$endpoint',
       data: data,
     );
-    return response.data;
+    return Map<String, dynamic>.from(response.data);
   }
 
   Future<Map<String, dynamic>> delete({required String endpoint}) async {
     var response = await _dio.delete('${ApiStrings.apiBaseUrl}$endpoint');
-    return response.data;
+    return Map<String, dynamic>.from(response.data);
   }
 }
