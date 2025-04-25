@@ -43,7 +43,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
             .toList()
             .first
             .rate ??
-        5.0;
+        0.0;
   }
 
   double getAverageRate(List<RateModel> rates) {
