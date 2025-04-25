@@ -10,7 +10,7 @@ class RecentlyProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductsCubit(),
+      create: (context) => ProductsCubit()..getAllProducts(),
       child: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
           switch (state) {
