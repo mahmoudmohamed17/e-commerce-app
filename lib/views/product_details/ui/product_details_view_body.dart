@@ -23,10 +23,10 @@ class ProductDetailsViewBody extends StatelessWidget {
           ),
         ),
         const SliverToBoxAdapter(child: SizedBox(height: 16)),
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: ProductNameAndPrice(),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: ProductNameAndPrice(product: product),
           ),
         ),
         const SliverToBoxAdapter(child: SizedBox(height: 16)),
