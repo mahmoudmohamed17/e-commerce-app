@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/services/supabase_service.dart';
 import 'package:e_commerce_app/core/utils/app_constants.dart';
 import 'package:e_commerce_app/views/auth/logic/models/user_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -28,14 +29,25 @@ class AuthCubit extends Cubit<AuthState> {
     required String name,
   }) async {
     emit(SignupLoading());
-    var result = await supabase.signup(email: email, password: password);
-    if (result) {
+    try {
+      await supabase.signup(email: email, password: password);
       await addUserData(name: name, email: email);
       await getUserData();
       emit(SignupSuccess());
-    } else {
-      emit(SignupFailure(message: 'Signup failed'));
+    } on AuthException catch (e) {
+      log('Signup error: ${e.message}');
+      emit(SignupFailure(message: e.message));
+    } catch (e) {
+      emit(SignupFailure(message: e.toString()));
     }
+
+    // if (result) {
+    //   await addUserData(name: name, email: email);
+    //   await getUserData();
+    //   emit(SignupSuccess());
+    // } else {
+    //   emit(SignupFailure(message: 'Signup failed'));
+    // }
   }
 
   Future<void> signInWithGoogle() async {
@@ -78,7 +90,7 @@ class AuthCubit extends Cubit<AuthState> {
     await supabase.addUserData(
       table: AppConstants.usersTable,
       data: {
-        'userid': SupabaseService.supabaseClient.auth.currentUser?.id,
+        'user_id': SupabaseService.supabaseClient.auth.currentUser?.id,
         'user_name': name,
         'user_email': email,
         'created_at': DateTime.now().toIso8601String(),

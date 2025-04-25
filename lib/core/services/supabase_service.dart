@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseService {
-  static var supabaseClient = Supabase.instance.client;
+  static final supabaseClient = Supabase.instance.client;
 
   Future<bool> login({required String email, required String password}) async {
     try {
@@ -19,13 +19,15 @@ class SupabaseService {
     }
   }
 
-  Future<bool> signup({required String email, required String password}) async {
-    try {
-      await supabaseClient.auth.signUp(password: password, email: email);
-      return true;
-    } catch (e) {
-      return false;
-    }
+  Future<AuthResponse?> signup({
+    required String email,
+    required String password,
+  }) async {
+    var response = await supabaseClient.auth.signUp(
+      password: password,
+      email: email,
+    );
+    return response;
   }
 
   Future<GoogleSignInAccount?> signInWithGoogle() async {
