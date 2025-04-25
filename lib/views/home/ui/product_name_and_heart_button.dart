@@ -5,16 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductNameAndHeartButton extends StatelessWidget {
-  const ProductNameAndHeartButton({super.key,  required this.product});
-final ProductModel product;
-
+  const ProductNameAndHeartButton({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-         Padding(
+        Padding(
           padding: const EdgeInsets.only(left: 16),
           child: Text(product.productName!, style: AppTextStyles.bold12),
         ),

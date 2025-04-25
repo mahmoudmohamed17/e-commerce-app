@@ -18,11 +18,13 @@ class ProductPriceAndBuyButton extends StatelessWidget {
           spacing: 4,
           children: [
             Text(
-              r'$''${product.productOldPrice!.toStringAsFixed(2)}',
+              r'$'
+              '${product.productOldPrice!.toStringAsFixed(2)}',
               style: AppTextStyles.bold12,
             ),
             Text(
-              r'$''${product.productCurrentPrice!.toStringAsFixed(2)}',
+              r'$'
+              '${product.productCurrentPrice!.toStringAsFixed(2)}',
               style: AppTextStyles.bold10.copyWith(
                 color: AppColors.kGreyColor,
                 decoration: TextDecoration.lineThrough,

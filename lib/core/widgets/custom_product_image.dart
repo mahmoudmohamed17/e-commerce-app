@@ -1,10 +1,11 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomProductImage extends StatelessWidget {
   const CustomProductImage({
-    super.key, required this.imageUrl,  this.height = 220,
+    super.key,
+    required this.imageUrl,
+    this.height = 220,
   });
   final String imageUrl;
   final double height;
@@ -17,12 +18,10 @@ class CustomProductImage extends StatelessWidget {
       width: double.infinity,
       fit: BoxFit.fill,
       placeholder:
-          (context, url) =>
-              const Center(child: CircularProgressIndicator()),
+          (context, url) => const Center(child: CircularProgressIndicator()),
       errorWidget:
-          (context, url, error) => const Center(
-            child: Icon(Icons.error, color: Colors.red),
-          ),
+          (context, url, error) =>
+              const Center(child: Icon(Icons.error, color: Colors.red)),
     );
   }
 }

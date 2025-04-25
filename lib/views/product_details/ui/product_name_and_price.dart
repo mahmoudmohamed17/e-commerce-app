@@ -14,7 +14,8 @@ class ProductNameAndPrice extends StatelessWidget {
       children: [
         Text(product.productName!, style: AppTextStyles.bold16),
         Text(
-         r'$''${product.productCurrentPrice!.toStringAsFixed(2)}',
+          r'$'
+          '${product.productCurrentPrice!.toStringAsFixed(2)}',
           style: AppTextStyles.bold12.copyWith(color: AppColors.kPrimaryColor),
         ),
       ],

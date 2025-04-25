@@ -8,3 +8,9 @@ sealed class ProductDetailsState extends Equatable {
 }
 
 final class ProductDetailsInitial extends ProductDetailsState {}
+
+final class GetProductRateLoading extends ProductDetailsState {}
+
+final class GetProductRateSuccess extends ProductDetailsState {}
+
+final class GetProductRateFailure extends ProductDetailsState {}

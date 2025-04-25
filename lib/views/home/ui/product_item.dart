@@ -38,16 +38,20 @@ class ProductItem extends StatelessWidget {
                 ),
                 ProductNameAndHeartButton(product: product),
                 const SizedBox(height: 8),
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: ProductPriceAndBuyButton(product: product,),
+                  child: ProductPriceAndBuyButton(product: product),
                 ),
                 const SizedBox(height: 16),
               ],
             ),
           ),
         ),
-         Positioned(top: 0, left: 0, child: DiscountBadge(discount: product.productSale!.toInt(),)),
+        Positioned(
+          top: 0,
+          left: 0,
+          child: DiscountBadge(discount: product.productSale!.toInt()),
+        ),
       ],
     );
   }

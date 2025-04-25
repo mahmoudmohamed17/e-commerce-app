@@ -16,9 +16,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     try {
       var data = await _apiService.get(
         endpoint: AppConstants.productsTable,
-        queryParameters: {
-          'select': '*,favorite_products(*),purchases(*)'
-        }
+        queryParameters: {'select': '*,favorite_products(*),purchases(*)'},
       );
       var products = parseProductsData(data);
       log('Products: $products');
@@ -28,7 +26,5 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
   }
 
-  Future<void> addProduct(ProductModel product) async {
-
-  }
+  Future<void> addProduct(ProductModel product) async {}
 }
