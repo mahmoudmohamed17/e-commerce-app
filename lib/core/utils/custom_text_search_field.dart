@@ -1,16 +1,31 @@
 import 'package:e_commerce_app/core/helpers/app_colors.dart';
 import 'package:e_commerce_app/core/helpers/build_border.dart';
+import 'package:e_commerce_app/core/helpers/navigation_extension.dart';
 import 'package:e_commerce_app/core/utils/app_text_styles.dart';
+import 'package:e_commerce_app/views/home/ui/search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class CustomTextSearchField extends StatelessWidget {
-  const CustomTextSearchField({super.key, this.onChanged});
-  final void Function(String)? onChanged;
+class CustomTextSearchField extends StatefulWidget {
+  const CustomTextSearchField({super.key});
+
+  @override
+  State<CustomTextSearchField> createState() => _CustomTextSearchFieldState();
+}
+
+class _CustomTextSearchFieldState extends State<CustomTextSearchField> {
+  TextEditingController searchController = TextEditingController();
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: searchController,
+      onChanged: (value) {},
       style: AppTextStyles.regular14,
       decoration: InputDecoration(
         hintText: 'Search in Market...',
@@ -18,7 +33,9 @@ class CustomTextSearchField extends StatelessWidget {
           color: AppColors.kGreyColor,
         ),
         suffixIcon: ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: () {
+            context.pushNamed(SearchView.id);
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.kPrimaryColor,
             foregroundColor: Colors.white,
