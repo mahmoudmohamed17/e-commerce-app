@@ -22,10 +22,14 @@ class SupabaseService {
   Future<AuthResponse?> signup({
     required String email,
     required String password,
+    required String name,
   }) async {
     var response = await supabaseClient.auth.signUp(
       password: password,
       email: email,
+      data: {
+        'name': name,
+      },
     );
     return response;
   }

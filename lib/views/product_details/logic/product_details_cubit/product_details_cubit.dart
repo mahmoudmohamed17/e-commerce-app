@@ -82,6 +82,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
           'comment': comment,
           'for_product': productId,
           'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
+          'user_name': SupabaseService.supabaseClient.auth.currentUser?.userMetadata?['name'] ?? 'Empty',
         },
         endpoint: AppConstants.commentsTable,
       );

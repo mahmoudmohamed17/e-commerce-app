@@ -17,6 +17,7 @@ class AuthCubit extends Cubit<AuthState> {
     var result = await supabase.login(email: email, password: password);
     if (result) {
       await getUserData();
+      log('User aud: ${SupabaseService.supabaseClient.auth.currentUser?.aud}');
       emit(LoginSuccess());
     } else {
       emit(LoginFailure(message: 'Login failed'));
@@ -30,7 +31,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(SignupLoading());
     try {
-      await supabase.signup(email: email, password: password);
+      await supabase.signup(email: email, password: password, name: name);
       await addUserData(name: name, email: email);
       await getUserData();
       emit(SignupSuccess());
