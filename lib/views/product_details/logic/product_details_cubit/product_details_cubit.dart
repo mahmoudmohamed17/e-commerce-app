@@ -72,6 +72,25 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     }
   }
 
+  Future<void> addComment({
+    required String comment,
+    required String productId,
+  }) async {
+    try {
+      await _apiService.post(
+        data: {
+          'comment': comment,
+          'for_product': productId,
+          'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
+        },
+        endpoint: AppConstants.commentsTable,
+      );
+      emit(AddCommentSuccess());
+    } catch (e) {
+      emit(AddCommentFailure(message: e.toString()));
+    }
+  }
+
   double? _getCurrentUserRate() {
     var currentUserId = SupabaseService.supabaseClient.auth.currentUser?.id;
     // 508f31ca-5e5b-43d6-9d10-ca8092a941b6 ==> ibrahim

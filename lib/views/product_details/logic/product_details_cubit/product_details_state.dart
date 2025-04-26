@@ -34,3 +34,15 @@ final class ToggleRateFailure extends ProductDetailsState {
   @override
   List<Object> get props => [message];
 }
+final class AddCommentLoading extends ProductDetailsState {}
+
+final class AddCommentSuccess extends ProductDetailsState {}
+
+final class AddCommentFailure extends ProductDetailsState {
+  final String message;
+
+  const AddCommentFailure({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
