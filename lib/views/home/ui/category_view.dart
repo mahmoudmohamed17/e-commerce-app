@@ -11,7 +11,10 @@ class CategoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context, category),
+      appBar: buildAppBar(
+        context,
+        '${category.characters.first.toUpperCase()}${category.substring(1).toLowerCase()}',
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(right: 12.0, left: 12.0, top: 12.0),

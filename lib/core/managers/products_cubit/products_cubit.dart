@@ -28,6 +28,9 @@ class ProductsCubit extends Cubit<ProductsState> {
       if (category != null) {
         result = searchByCategory(category);
       }
+      if (query == null && category == null) {
+        result = products;
+      }
       emit(ProductsSuccess(products: result));
     } catch (e) {
       log('Error: $e');
