@@ -1,16 +1,13 @@
 part of 'products_cubit.dart';
 
-sealed class ProductsState extends Equatable {}
-
-final class ProductsInitial extends ProductsState {
+sealed class ProductsState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-final class ProductsLoading extends ProductsState {
-  @override
-  List<Object?> get props => [];
-}
+final class ProductsInitial extends ProductsState {}
+
+final class ProductsLoading extends ProductsState {}
 
 final class ProductsSuccess extends ProductsState {
   final List<ProductModel> products;
@@ -29,3 +26,7 @@ final class ProductsFailure extends ProductsState {
   @override
   List<Object?> get props => [message];
 }
+
+final class ToggleFavoriteSuccess extends ProductsState {}
+
+final class ToggleFavoriteFailure extends ProductsState {}

@@ -17,20 +17,23 @@ class RecentlyProductsList extends StatelessWidget {
               ProductsCubit()..getAllProducts(query: query, category: category),
       child: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
+          var cubit = context.read<ProductsCubit>();
           switch (state) {
             case ProductsInitial():
             case ProductsLoading():
               return const Center(child: CircularProgressIndicator());
             case ProductsSuccess():
+            case ToggleFavoriteSuccess():
               return Column(
-                children: List.generate(state.products.length, (index) {
+                children: List.generate(cubit.results.length, (index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 12),
-                    child: ProductItem(product: state.products[index]),
+                    child: ProductItem(product: cubit.results[index]),
                   );
                 }),
               );
             case ProductsFailure():
+            case ToggleFavoriteFailure():
               return const Center(
                 child: Text(
                   'Error loading products',

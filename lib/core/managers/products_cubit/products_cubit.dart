@@ -1,8 +1,8 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/models/product_model/product_model.dart';
 import 'package:e_commerce_app/core/services/api_service.dart';
+import 'package:e_commerce_app/core/services/supabase_service.dart';
 import 'package:e_commerce_app/core/utils/app_constants.dart';
 import 'package:equatable/equatable.dart';
 part 'products_state.dart';
@@ -12,7 +12,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   final _apiService = ApiService();
 
   List<ProductModel> products = [];
-  List<ProductModel> result = [];
+  List<ProductModel> results = [];
 
   Future<void> getAllProducts({String? query, String? category}) async {
     emit(ProductsLoading());
@@ -23,22 +23,42 @@ class ProductsCubit extends Cubit<ProductsState> {
       );
       products = data.map((e) => ProductModel.fromJson(e)).toList();
       if (query != null) {
-        result = search(query);
+        results = search(query);
       }
       if (category != null) {
-        result = searchByCategory(category);
+        results = searchByCategory(category);
       }
       if (query == null && category == null) {
-        result = products;
+        results = products;
       }
-      emit(ProductsSuccess(products: result));
+      emit(ProductsSuccess(products: results));
     } catch (e) {
       log('Error: $e');
       emit(ProductsFailure(message: e.toString()));
     }
   }
 
-  Future<void> addProduct(ProductModel product) async {}
+  Future<void> toggleProductFavorite(ProductModel product) async {
+    bool isFavorite = false;
+    try {
+      if (product.favoriteProducts!.isNotEmpty) {
+        isFavorite = !product.favoriteProducts!.first.isFavorite!;
+      } else {
+        isFavorite = true;
+      }
+      await _apiService.post(
+        data: {
+          'user_id': SupabaseService.supabaseClient.auth.currentUser?.id,
+          'product_id': product.productId,
+          'is_favorite': isFavorite,
+        },
+        endpoint: AppConstants.favoriteProductsTable,
+      );
+      emit(ToggleFavoriteSuccess());
+    } catch (e) {
+      emit(ToggleFavoriteFailure());
+    }
+  }
 
   List<ProductModel> search(String? query) {
     if (query != null) {
