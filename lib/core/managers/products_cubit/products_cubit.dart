@@ -38,21 +38,45 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
   }
 
-  Future<void> toggleProductFavorite(ProductModel product) async {
-    bool isFavorite = false;
+  Map<String, bool> favoriteProducts = {}; // Related to one product only
+  Future<void> addProductToFavorites(ProductModel product) async {
     try {
-      if (product.favoriteProducts!.isNotEmpty) {
-        isFavorite = !product.favoriteProducts!.first.isFavorite!;
+      favoriteProducts.addAll({product.productId!: true});
+      if (product.favoriteProducts == null) {
+        await _apiService.post(
+          data: {
+            'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
+            'for_product': product.productId,
+            'is_favorite': true,
+          },
+          endpoint: AppConstants.favoriteProductsTable,
+        );
       } else {
-        isFavorite = true;
+        await _apiService.patch(
+          data: {'is_favorite': true},
+          endpoint: AppConstants.favoriteProductsTable,
+          queryParameters: {
+            'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
+            'for_product': product.productId,
+          },
+        );
       }
-      await _apiService.post(
-        data: {
-          'user_id': SupabaseService.supabaseClient.auth.currentUser?.id,
-          'product_id': product.productId,
-          'is_favorite': isFavorite,
-        },
+      emit(ToggleFavoriteSuccess());
+    } catch (e) {
+      emit(ToggleFavoriteFailure());
+    }
+  }
+
+  Future<void> removeProductFromFavorites(ProductModel product) async {
+    try {
+      favoriteProducts.addAll({product.productId!: false});
+      await _apiService.patch(
+        data: {'is_favorite': true},
         endpoint: AppConstants.favoriteProductsTable,
+        queryParameters: {
+          'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
+          'for_product': product.productId,
+        },
       );
       emit(ToggleFavoriteSuccess());
     } catch (e) {
@@ -86,5 +110,9 @@ class ProductsCubit extends Cubit<ProductsState> {
     } else {
       return products;
     }
+  }
+
+  bool checkIsFavorite(String productId) {
+    return favoriteProducts[productId] ?? false;
   }
 }
