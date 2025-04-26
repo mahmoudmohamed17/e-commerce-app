@@ -15,10 +15,20 @@ class UserComment extends StatelessWidget {
       children: [
         Text(commentModel.userName, style: AppTextStyles.bold12),
         Text(commentModel.comment, style: AppTextStyles.regular12),
-        commentModel.adminReply!.isNotEmpty
-            ? Text(
-              'Reply: ${commentModel.adminReply}',
-              style: AppTextStyles.regular12,
+        commentModel.adminReply != null
+            ? Text.rich(
+              TextSpan(
+                children: [
+                  const TextSpan(
+                    text: 'Youssef (Admin): ',
+                    style: AppTextStyles.bold12,
+                  ),
+                  TextSpan(
+                    text: commentModel.adminReply ?? 'NO REPLY',
+                    style: AppTextStyles.regular12,
+                  ),
+                ],
+              ),
             )
             : const SizedBox.shrink(),
       ],
