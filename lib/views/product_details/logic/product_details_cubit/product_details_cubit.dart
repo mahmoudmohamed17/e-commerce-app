@@ -13,6 +13,10 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   ProductDetailsCubit() : super(ProductDetailsInitial());
 
   final _apiService = ApiService();
+  List<RateModel> rates = [];
+
+  double productAvgRate = 0.0;
+  double currentUserRate = 0.0;
 
   /// Note: We get all the product's rates based on its id
   /// Then we could make additional filtering on the client side
@@ -24,22 +28,49 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
         endpoint: AppConstants.ratesTable,
         queryParameters: {'select': '*', 'for_product': 'eq.$productId'},
       );
-      var rates = data.map((e) => RateModel.fromJson(e)).toList();
-      var productAvgRate = getAverageRate(rates);
-      var currentUserRate = getCurrentUserRate(rates);
-      emit(
-        GetProductRateSuccess(
-          productAvgRate: productAvgRate,
-          currentUserRate: currentUserRate!,
-        ),
-      );
+      rates = data.map((e) => RateModel.fromJson(e)).toList();
+      productAvgRate = _getAverageRate();
+      currentUserRate = _getCurrentUserRate() ?? 0.0;
+      emit(GetProductRateSuccess());
     } catch (e) {
       log('Error: $e');
       emit(GetProductRateFailure(message: e.toString()));
     }
   }
 
-  double? getCurrentUserRate(List<RateModel> rates) {
+  Future<void> toggleRate({
+    required String productId,
+    required double rate,
+  }) async {
+    var result = _isUserRateExist(rates, productId);
+    try {
+      if (result) {
+        await _apiService.patch(
+          data: {'rate': rate},
+          endpoint: AppConstants.ratesTable,
+          queryParameters: {
+            'for_product': 'eq.$productId',
+            'for_user':
+                'eq.${SupabaseService.supabaseClient.auth.currentUser?.id}',
+          },
+        );
+      } else {
+        await _apiService.post(
+          data: {
+            'rate': rate,
+            'for_product': productId,
+            'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
+          },
+          endpoint: AppConstants.ratesTable,
+        );
+      }
+      emit(ToggleRateSuccess());
+    } catch (e) {
+      emit(ToggleRateFailure(message: e.toString()));
+    }
+  }
+
+  double? _getCurrentUserRate() {
     var currentUserId = SupabaseService.supabaseClient.auth.currentUser?.id;
     // 508f31ca-5e5b-43d6-9d10-ca8092a941b6 ==> ibrahim
     if (rates.isNotEmpty) {
@@ -52,12 +83,22 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     }
   }
 
-  double getAverageRate(List<RateModel> rates) {
+  double _getAverageRate() {
     if (rates.isEmpty) return 0;
     double total = 0;
     for (var rate in rates) {
       total += rate.rate!;
     }
     return total / rates.length;
+  }
+
+  bool _isUserRateExist(List<RateModel> rates, String productId) {
+    var currentUserId = SupabaseService.supabaseClient.auth.currentUser?.id;
+    return rates
+        .where(
+          (item) =>
+              item.forUser == currentUserId && item.forProduct == productId,
+        )
+        .isNotEmpty;
   }
 }

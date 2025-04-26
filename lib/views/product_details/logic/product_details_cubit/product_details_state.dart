@@ -11,23 +11,25 @@ final class ProductDetailsInitial extends ProductDetailsState {}
 
 final class GetProductRateLoading extends ProductDetailsState {}
 
-final class GetProductRateSuccess extends ProductDetailsState {
-  final double productAvgRate;
-  final double currentUserRate;
-
-  const GetProductRateSuccess({
-    required this.productAvgRate,
-    required this.currentUserRate,
-  });
-
-  @override
-  List<Object> get props => [productAvgRate, currentUserRate];
-}
+final class GetProductRateSuccess extends ProductDetailsState {}
 
 final class GetProductRateFailure extends ProductDetailsState {
   final String message;
 
   const GetProductRateFailure({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+final class ToggleRateLoading extends ProductDetailsState {}
+
+final class ToggleRateSuccess extends ProductDetailsState {}
+
+final class ToggleRateFailure extends ProductDetailsState {
+  final String message;
+
+  const ToggleRateFailure({required this.message});
 
   @override
   List<Object> get props => [message];

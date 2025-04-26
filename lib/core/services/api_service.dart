@@ -29,10 +29,12 @@ class ApiService {
   Future<Map<String, dynamic>> post({
     required Map<String, dynamic> data,
     required String endpoint,
+    Map<String, dynamic>? queryParameters,
   }) async {
     var response = await _dio.post(
       '${ApiStrings.apiBaseUrl}$endpoint',
       data: data,
+      queryParameters: queryParameters,
     );
     return Map<String, dynamic>.from(response.data);
   }
@@ -41,16 +43,24 @@ class ApiService {
   Future<Map<String, dynamic>> patch({
     required Map<String, dynamic> data,
     required String endpoint,
+    Map<String, dynamic>? queryParameters,
   }) async {
     var response = await _dio.patch(
       '${ApiStrings.apiBaseUrl}$endpoint',
       data: data,
+      queryParameters: queryParameters,
     );
     return Map<String, dynamic>.from(response.data);
   }
 
-  Future<Map<String, dynamic>> delete({required String endpoint}) async {
-    var response = await _dio.delete('${ApiStrings.apiBaseUrl}$endpoint');
+  Future<Map<String, dynamic>> delete({
+    required String endpoint,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    var response = await _dio.delete(
+      '${ApiStrings.apiBaseUrl}$endpoint',
+      queryParameters: queryParameters,
+    );
     return Map<String, dynamic>.from(response.data);
   }
 }
