@@ -47,7 +47,7 @@ class ProductsCubit extends Cubit<ProductsState> {
           data: {
             'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
             'for_product': product.productId,
-            'is_favorite': true,
+            'is_favorite': true
           },
           endpoint: AppConstants.favoriteProductsTable,
         );
@@ -56,13 +56,14 @@ class ProductsCubit extends Cubit<ProductsState> {
           data: {'is_favorite': true},
           endpoint: AppConstants.favoriteProductsTable,
           queryParameters: {
-            'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
-            'for_product': product.productId,
+            'for_user': 'eq.${SupabaseService.supabaseClient.auth.currentUser?.id}',
+            'for_product': 'eq.${product.productId}'
           },
         );
       }
       emit(ToggleFavoriteSuccess());
     } catch (e) {
+      log('Error: $e');
       emit(ToggleFavoriteFailure());
     }
   }
