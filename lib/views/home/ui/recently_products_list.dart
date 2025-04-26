@@ -5,13 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RecentlyProductsList extends StatelessWidget {
-  const RecentlyProductsList({super.key, this.query});
+  const RecentlyProductsList({super.key, this.query, this.category});
   final String? query;
+  final String? category;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ProductsCubit()..getAllProducts(query: query),
+      create:
+          (context) =>
+              ProductsCubit()..getAllProducts(query: query, category: category),
       child: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
           switch (state) {

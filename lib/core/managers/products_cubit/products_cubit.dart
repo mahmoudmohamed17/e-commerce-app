@@ -12,8 +12,9 @@ class ProductsCubit extends Cubit<ProductsState> {
   final _apiService = ApiService();
 
   List<ProductModel> products = [];
+  List<ProductModel> result = [];
 
-  Future<void> getAllProducts({String? query}) async {
+  Future<void> getAllProducts({String? query, String? category}) async {
     emit(ProductsLoading());
     try {
       var data = await _apiService.get(
@@ -21,7 +22,12 @@ class ProductsCubit extends Cubit<ProductsState> {
         queryParameters: {'select': '*,favorite_products(*),purchases(*)'},
       );
       products = data.map((e) => ProductModel.fromJson(e)).toList();
-      var result = search(query);
+      if (query != null) {
+        result = search(query);
+      }
+      if (category != null) {
+        result = searchByCategory(category);
+      }
       emit(ProductsSuccess(products: result));
     } catch (e) {
       log('Error: $e');
@@ -42,6 +48,18 @@ class ProductsCubit extends Cubit<ProductsState> {
               )
               .toList();
       return filteredProducts;
+    } else {
+      return products;
+    }
+  }
+
+  List<ProductModel> searchByCategory(String? category) {
+    if (category != null) {
+      final result =
+          products
+              .where((product) => product.productCategory!.trim() == category)
+              .toList();
+      return result;
     } else {
       return products;
     }

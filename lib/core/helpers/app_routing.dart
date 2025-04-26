@@ -3,6 +3,7 @@ import 'package:e_commerce_app/core/models/product_model/product_model.dart';
 import 'package:e_commerce_app/views/auth/ui/forgot_password_view.dart';
 import 'package:e_commerce_app/views/auth/ui/login_view.dart';
 import 'package:e_commerce_app/views/auth/ui/signup_view.dart';
+import 'package:e_commerce_app/views/home/ui/category_view.dart';
 import 'package:e_commerce_app/views/home/ui/search_view.dart';
 import 'package:e_commerce_app/views/main_view/ui/main_view.dart';
 import 'package:e_commerce_app/views/product_details/ui/product_details_view.dart';
@@ -36,6 +37,11 @@ class AppRouting {
         final query = settings.arguments as String;
         return MaterialPageRoute(
           builder: (context) => SearchView(query: query),
+        );
+      case Routes.categoryView:
+        final category = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (context) => CategoryView(category: category),
         );
       default:
         return MaterialPageRoute(builder: (context) => const Scaffold());

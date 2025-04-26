@@ -1,3 +1,6 @@
+analyzer:
+  errors:
+    implementation_imports: ignore
 include: package:flutter_lints/flutter.yaml
 linter:
   rules:
