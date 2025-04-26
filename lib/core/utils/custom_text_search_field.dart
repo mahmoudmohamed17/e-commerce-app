@@ -34,7 +34,7 @@ class _CustomTextSearchFieldState extends State<CustomTextSearchField> {
         ),
         suffixIcon: ElevatedButton.icon(
           onPressed: () {
-            context.pushNamed(SearchView.id);
+            context.pushNamed(SearchView.id, arguments: searchController.text);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.kPrimaryColor,

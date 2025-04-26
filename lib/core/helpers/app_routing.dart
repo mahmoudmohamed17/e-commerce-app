@@ -33,8 +33,9 @@ class AppRouting {
           builder: (context) => ProductDetailsView(product: product),
         );
       case Routes.searchView:
+        final query = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (context) => const SearchView(),
+          builder: (context) => SearchView(query: query),
         );
       default:
         return MaterialPageRoute(builder: (context) => const Scaffold());
