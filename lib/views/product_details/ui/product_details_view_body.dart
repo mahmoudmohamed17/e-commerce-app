@@ -1,4 +1,3 @@
-import 'package:e_commerce_app/core/helpers/snack_bar.dart';
 import 'package:e_commerce_app/core/models/product_model/product_model.dart';
 import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:e_commerce_app/core/widgets/custom_product_image.dart';
@@ -17,76 +16,59 @@ class ProductDetailsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
-      listener: (context, state) {
-        if (state is GetProductRateFailure) {
-          snackBar(context, state.message);
-        }
-        if (state is ToggleRateFailure) {
-          snackBar(context, state.message);
-        }
-      },
-      builder: (context, state) {
-        var cubit = context.read<ProductDetailsCubit>();
-        if (state is GetProductRateLoading || state is ToggleRateLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: CustomProductImage(
-                  imageUrl: product.productImage!,
-                  height: 250,
-                ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: ProductNameAndPrice(product: product),
-                ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              SliverToBoxAdapter(
-                child: ProductRateAndHeartButton(
-                  productAvgRate: cubit.productAvgRate,
-                ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              SliverToBoxAdapter(
-                child: Text(
-                  product.productDescription!,
-                  style: AppTextStyles.regular16,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              SliverToBoxAdapter(
-                child: Center(
-                  child: ProductRatingBar(
-                    currentRate: cubit.currentUserRate,
-                    productId: product.productId!,
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: CustomSendCommentTextField(),
-                ),
-              ),
-              const SliverToBoxAdapter(child: SizedBox(height: 16)),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: CommentsSectionWidget(),
-                ),
-              ),
-            ],
-          );
-        }
-      },
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: CustomProductImage(
+            imageUrl: product.productImage!,
+            height: 250,
+          ),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: ProductNameAndPrice(product: product),
+          ),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(
+          child: ProductRateAndHeartButton(
+            productAvgRate: context.read<ProductDetailsCubit>().productAvgRate,
+          ),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(
+          child: Text(
+            product.productDescription!,
+            style: AppTextStyles.regular16,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(
+          child: Center(
+            child: ProductRatingBar(
+              currentRate: context.read<ProductDetailsCubit>().currentUserRate,
+              productId: product.productId!,
+            ),
+          ),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        const SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: CustomSendCommentTextField(),
+          ),
+        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        const SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: CommentsSectionWidget(),
+          ),
+        ),
+      ],
     );
   }
 }

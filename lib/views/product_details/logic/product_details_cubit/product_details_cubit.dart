@@ -64,6 +64,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
           endpoint: AppConstants.ratesTable,
         );
       }
+      productAvgRate = _getAverageRate();
+      currentUserRate = _getCurrentUserRate() ?? 0.0;
       emit(ToggleRateSuccess());
     } catch (e) {
       emit(ToggleRateFailure(message: e.toString()));

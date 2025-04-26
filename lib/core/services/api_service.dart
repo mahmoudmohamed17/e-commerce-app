@@ -26,7 +26,7 @@ class ApiService {
     return List<Map<String, dynamic>>.from(response.data);
   }
 
-  Future<Map<String, dynamic>> post({
+  Future<String>? post({
     required Map<String, dynamic> data,
     required String endpoint,
     Map<String, dynamic>? queryParameters,
@@ -36,11 +36,11 @@ class ApiService {
       data: data,
       queryParameters: queryParameters,
     );
-    return Map<String, dynamic>.from(response.data);
+    return response.data;
   }
 
   // Similar to PUT; as used to update a resource
-  Future<Map<String, dynamic>> patch({
+  Future<String>? patch({
     required Map<String, dynamic> data,
     required String endpoint,
     Map<String, dynamic>? queryParameters,
@@ -50,10 +50,10 @@ class ApiService {
       data: data,
       queryParameters: queryParameters,
     );
-    return Map<String, dynamic>.from(response.data);
+    return response.data;
   }
 
-  Future<Map<String, dynamic>> delete({
+  Future<String>? delete({
     required String endpoint,
     Map<String, dynamic>? queryParameters,
   }) async {
@@ -61,6 +61,6 @@ class ApiService {
       '${ApiStrings.apiBaseUrl}$endpoint',
       queryParameters: queryParameters,
     );
-    return Map<String, dynamic>.from(response.data);
+    return response.data;
   }
 }
