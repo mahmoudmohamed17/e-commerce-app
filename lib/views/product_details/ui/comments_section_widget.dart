@@ -4,6 +4,7 @@ import 'package:e_commerce_app/core/utils/app_text_styles.dart';
 import 'package:e_commerce_app/views/product_details/logic/models/comment_model.dart';
 import 'package:e_commerce_app/views/product_details/ui/user_comment.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase/src/supabase_stream_builder.dart';
 
 class CommentsSectionWidget extends StatelessWidget {
   const CommentsSectionWidget({super.key, required this.productId});
@@ -12,11 +13,7 @@ class CommentsSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: SupabaseService.supabaseClient
-          .from(AppConstants.commentsTable)
-          .stream(primaryKey: ['id'])
-          .eq('for_product', productId)
-          .order('created_at', ascending: true),
+      stream: commentsTableStream(),
       builder: (context, snapshot) {
         var comments = snapshot.data;
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -56,5 +53,13 @@ class CommentsSectionWidget extends StatelessWidget {
         );
       },
     );
+  }
+
+  SupabaseStreamBuilder commentsTableStream() {
+    return SupabaseService.supabaseClient
+        .from(AppConstants.commentsTable)
+        .stream(primaryKey: ['id'])
+        .eq('for_product', productId)
+        .order('created_at', ascending: true);
   }
 }
