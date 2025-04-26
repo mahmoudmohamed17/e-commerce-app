@@ -40,6 +40,7 @@ class _CustomSendCommentTextFieldState
               comment: commentController.text,
               productId: widget.productId,
             );
+            commentController.clear();
           },
           icon: const Icon(
             FontAwesomeIcons.paperPlane,
