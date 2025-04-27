@@ -1,10 +1,10 @@
 import 'dart:developer';
-import 'package:bloc/bloc.dart';
 import 'package:e_commerce_app/core/models/product_model/product_model.dart';
 import 'package:e_commerce_app/core/services/api_service.dart';
 import 'package:e_commerce_app/core/services/supabase_service.dart';
 import 'package:e_commerce_app/core/utils/app_constants.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 part 'products_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState> {
@@ -47,7 +47,7 @@ class ProductsCubit extends Cubit<ProductsState> {
           data: {
             'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
             'for_product': product.productId,
-            'is_favorite': true
+            'is_favorite': true,
           },
           endpoint: AppConstants.favoriteProductsTable,
         );
@@ -56,8 +56,9 @@ class ProductsCubit extends Cubit<ProductsState> {
           data: {'is_favorite': true},
           endpoint: AppConstants.favoriteProductsTable,
           queryParameters: {
-            'for_user': 'eq.${SupabaseService.supabaseClient.auth.currentUser?.id}',
-            'for_product': 'eq.${product.productId}'
+            'for_user':
+                'eq.${SupabaseService.supabaseClient.auth.currentUser?.id}',
+            'for_product': 'eq.${product.productId}',
           },
         );
       }
@@ -114,6 +115,15 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   bool checkIsFavorite(String productId) {
+    if (favoriteProducts.isEmpty) {
+      return results
+              .where((product) => product.productId == productId)
+              .first
+              .favoriteProducts
+              ?.first
+              .isFavorite ??
+          false;
+    }
     return favoriteProducts[productId] ?? false;
   }
 }
