@@ -25,10 +25,10 @@ class RecentlyProductsList extends StatelessWidget {
             case ProductsSuccess():
             case ToggleFavoriteSuccess():
               return Column(
-                children: List.generate(cubit.results.length, (index) {
+                children: List.generate(cubit.finalPesults.length, (index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 12),
-                    child: ProductItem(product: cubit.results[index]),
+                    child: ProductItem(product: cubit.finalPesults[index]),
                   );
                 }),
               );

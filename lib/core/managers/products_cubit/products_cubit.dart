@@ -11,8 +11,9 @@ class ProductsCubit extends Cubit<ProductsState> {
   ProductsCubit() : super(ProductsInitial());
   final _apiService = ApiService();
 
-  List<ProductModel> products = [];
-  List<ProductModel> results = [];
+  List<ProductModel> tempResult = [];
+  List<ProductModel> finalPesults = [];
+  var currentUserId = SupabaseService.supabaseClient.auth.currentUser?.id;
 
   Future<void> getAllProducts({String? query, String? category}) async {
     emit(ProductsLoading());
@@ -21,17 +22,17 @@ class ProductsCubit extends Cubit<ProductsState> {
         endpoint: AppConstants.productsTable,
         queryParameters: {'select': '*,favorite_products(*),purchases(*)'},
       );
-      products = data.map((e) => ProductModel.fromJson(e)).toList();
+      tempResult = data.map((e) => ProductModel.fromJson(e)).toList();
       if (query != null) {
-        results = search(query);
+        finalPesults = search(query);
       }
       if (category != null) {
-        results = searchByCategory(category);
+        finalPesults = searchByCategory(category);
       }
       if (query == null && category == null) {
-        results = products;
+        finalPesults = tempResult;
       }
-      emit(ProductsSuccess(products: results));
+      emit(ProductsSuccess());
     } catch (e) {
       log('Error: $e');
       emit(ProductsFailure(message: e.toString()));
@@ -45,7 +46,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       if (product.favoriteProducts == null) {
         await _apiService.post(
           data: {
-            'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
+            'for_user': currentUserId,
             'for_product': product.productId,
             'is_favorite': true,
           },
@@ -56,8 +57,7 @@ class ProductsCubit extends Cubit<ProductsState> {
           data: {'is_favorite': true},
           endpoint: AppConstants.favoriteProductsTable,
           queryParameters: {
-            'for_user':
-                'eq.${SupabaseService.supabaseClient.auth.currentUser?.id}',
+            'for_user': 'eq.$currentUserId',
             'for_product': 'eq.${product.productId}',
           },
         );
@@ -76,7 +76,7 @@ class ProductsCubit extends Cubit<ProductsState> {
         data: {'is_favorite': true},
         endpoint: AppConstants.favoriteProductsTable,
         queryParameters: {
-          'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
+          'for_user': currentUserId,
           'for_product': product.productId,
         },
       );
@@ -89,7 +89,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   List<ProductModel> search(String? query) {
     if (query != null) {
       final filteredProducts =
-          products
+          tempResult
               .where(
                 (product) => product.productName!.toLowerCase().contains(
                   query.toLowerCase(),
@@ -98,32 +98,48 @@ class ProductsCubit extends Cubit<ProductsState> {
               .toList();
       return filteredProducts;
     } else {
-      return products;
+      return tempResult;
     }
   }
 
   List<ProductModel> searchByCategory(String? category) {
     if (category != null) {
       final result =
-          products
+          tempResult
               .where((product) => product.productCategory!.trim() == category)
               .toList();
       return result;
     } else {
-      return products;
+      return tempResult;
     }
   }
 
   bool checkIsFavorite(String productId) {
     if (favoriteProducts.isEmpty) {
-      return results
-              .where((product) => product.productId == productId)
-              .first
+      final favoriteProduct =
+          finalPesults
+              .firstWhere((product) => product.productId == productId)
               .favoriteProducts
-              ?.first
-              .isFavorite ??
-          false;
+              ?.first;
+      favoriteProduct!.forUser == currentUserId ? true : false;
     }
     return favoriteProducts[productId] ?? false;
+  }
+
+  List<ProductModel> favoriteProductsList = [];
+  void getFavoriteProducts() {
+    favoriteProductsList =
+        tempResult.where((product) {
+          if (product.favoriteProducts != null && favoriteProducts.isNotEmpty) {
+            for (var favoriteProduct in product.favoriteProducts!) {
+              if (favoriteProduct.forUser == currentUserId) {
+                favoriteProductsList.add(product);
+              }
+            }
+            return true;
+          } else {
+            return false;
+          }
+        }).toList();
   }
 }
