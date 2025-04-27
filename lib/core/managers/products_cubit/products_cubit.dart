@@ -23,6 +23,7 @@ class ProductsCubit extends Cubit<ProductsState> {
         queryParameters: {'select': '*,favorite_products(*),purchases(*)'},
       );
       tempResult = data.map((e) => ProductModel.fromJson(e)).toList();
+      getFavoriteProducts();
       if (query != null) {
         finalPesults = search(query);
       }

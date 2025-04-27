@@ -18,6 +18,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   double productAvgRate = 0.0;
   double currentUserRate = 0.0;
 
+  var currentUser = SupabaseService.supabaseClient.auth.currentUser;
+
   /// Note: We get all the product's rates based on its id
   /// Then we could make additional filtering on the client side
   /// to get the rates for the current user
@@ -50,8 +52,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
           endpoint: AppConstants.ratesTable,
           queryParameters: {
             'for_product': 'eq.$productId',
-            'for_user':
-                'eq.${SupabaseService.supabaseClient.auth.currentUser?.id}',
+            'for_user': 'eq.${currentUser?.id}',
           },
         );
       } else {
@@ -59,7 +60,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
           data: {
             'rate': rate,
             'for_product': productId,
-            'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
+            'for_user': currentUser?.id
           },
           endpoint: AppConstants.ratesTable,
         );
@@ -81,8 +82,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
         data: {
           'comment': comment,
           'for_product': productId,
-          'for_user': SupabaseService.supabaseClient.auth.currentUser?.id,
-          'user_name': SupabaseService.supabaseClient.auth.currentUser?.userMetadata?['name'] ?? 'Empty',
+          'for_user': currentUser?.id,
+          'user_name': currentUser?.userMetadata?['name'] ?? 'Empty'
         },
         endpoint: AppConstants.commentsTable,
       );
@@ -93,12 +94,10 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   }
 
   double? _getCurrentUserRate() {
-    var currentUserId = SupabaseService.supabaseClient.auth.currentUser?.id;
-    // 508f31ca-5e5b-43d6-9d10-ca8092a941b6 ==> ibrahim
     if (rates.isNotEmpty) {
       // Additional checks to ensure the current user ID is not null
       // and the rates list is not empty
-      var found = rates.where((item) => item.forUser == currentUserId);
+      var found = rates.where((item) => item.forUser == currentUser?.id);
       return found.isNotEmpty ? found.first.rate : 0.0;
     } else {
       return 0.0;
@@ -115,11 +114,10 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   }
 
   bool _isUserRateExist(List<RateModel> rates, String productId) {
-    var currentUserId = SupabaseService.supabaseClient.auth.currentUser?.id;
     return rates
         .where(
           (item) =>
-              item.forUser == currentUserId && item.forProduct == productId,
+              item.forUser == currentUser?.id && item.forProduct == productId,
         )
         .isNotEmpty;
   }

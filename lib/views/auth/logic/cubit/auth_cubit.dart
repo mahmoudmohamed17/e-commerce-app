@@ -11,13 +11,13 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
   var supabase = SupabaseService();
+  UserModel? userData;
 
   Future<void> login(String email, String password) async {
     emit(LoginLoading());
     var result = await supabase.login(email: email, password: password);
     if (result) {
       await getUserData();
-      log('User aud: ${SupabaseService.supabaseClient.auth.currentUser?.aud}');
       emit(LoginSuccess());
     } else {
       emit(LoginFailure(message: 'Login failed'));
@@ -104,6 +104,7 @@ class AuthCubit extends Cubit<AuthState> {
     var result = await supabase.getUserData();
     if (result != null) {
       log('User data: ${result.toJson()}');
+      userData = result;
       emit(UserDataSuccess(userData: result));
     } else {
       emit(UserDataFailure(message: 'Failed to get user data'));
